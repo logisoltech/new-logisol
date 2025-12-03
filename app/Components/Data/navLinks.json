@@ -1,0 +1,62 @@
+[
+    {
+        "label": "Home",
+        "href": "/"
+    },
+    {
+        "label": "About Us",
+        "href": "/about-us"
+    },
+    {
+        "label": "Services",
+        "href": "/services",
+        "dropdown": [
+            {
+                "label": "Web Development",
+                "href": "/custom-web-development-services"
+            },
+            {
+                "label": "Mobile Development", 
+                "href": "/mobile-application-development-services"
+            },
+            {
+                "label": "Digital Marketing",
+                "href": "/digital-marketing-services",
+                "dropdown": [
+                    {
+                        "label": "SEO",
+                        "href": "/seo-services-and-strategy"
+                    },
+                    {
+                        "label": "Social Media Marketing",
+                        "href": "/social-media-marketing-services"
+                    }
+                ]
+            },
+            {
+                "label": "Graphic Design",
+                "href": "/graphics-designing-services"
+            },
+            {
+                "label": "Video Editing",
+                "href": "/professional-video-editing-services"
+            }
+        ]
+    },
+    {
+        "label": "Projects",
+        "href": "/our-projects"
+    },
+    {
+        "label": "Blog",
+        "href": "/blogs"
+    },
+    {
+        "label": "Our Pricing",
+        "href": "/our-pricing"
+    },
+    {
+        "label": "Contact",
+        "href": "/contact-us"
+    }
+]
