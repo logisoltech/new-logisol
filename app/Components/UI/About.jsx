@@ -76,16 +76,6 @@ const About = () => {
                 team of expert developers, designers, and strategists, we deliver cutting-edge
                 technology that drives business growth.
               </p>
-              <p>
-                Our mission is to bridge the gap between complex logic and user-friendly innovation,
-                creating solutions that not only meet but exceed expectations. We combine technical
-                excellence with creative vision to build products that make a difference.
-              </p>
-              <p>
-                From web and mobile development to digital marketing and design, we offer
-                comprehensive services tailored to your unique needs. Partner with us to turn your
-                vision into reality.
-              </p>
             </div>
           </div>
         </div>

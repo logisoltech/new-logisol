@@ -4,11 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Calendar from './Calendar';
 
-const GetStartedForm = ({ onClose, buttonRef }) => {
-  const formRef = useRef(null);
+const GetStartedForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     scheduleDate: null
   });
   const [showCalendar, setShowCalendar] = useState(false);
@@ -48,29 +48,6 @@ const GetStartedForm = ({ onClose, buttonRef }) => {
     };
   }, [showCalendar]);
 
-  // Close form when clicking outside (but not when clicking the button)
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Don't close if clicking the button (button handles its own toggle)
-      if (buttonRef?.current && buttonRef.current.contains(event.target)) {
-        return;
-      }
-      
-      // Don't close if clicking inside the calendar
-      if (calendarContainerRef.current && calendarContainerRef.current.contains(event.target)) {
-        return;
-      }
-      
-      // Close if clicking outside both the form and the button
-      if (formRef.current && !formRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [onClose, buttonRef]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -106,18 +83,13 @@ const GetStartedForm = ({ onClose, buttonRef }) => {
   };
 
   return (
-    <div
-      ref={formRef}
-      className="w-full max-w-7xl mx-auto"
-      style={{ pointerEvents: 'auto', overflow: 'visible' }}
-    >
+    <div className="w-full" style={{ pointerEvents: 'auto' }}>
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full px-6 py-4 flex items-center gap-4 w-full relative"
-        style={{ overflow: 'visible' }}
+        className="backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full px-6 py-4 flex flex-col md:flex-row items-center gap-4 w-full"
       >
         {/* Name Field */}
-        <div className="flex-1">
+        <div className="flex-1 w-full md:w-auto">
           <input
             type="text"
             name="name"
@@ -130,7 +102,7 @@ const GetStartedForm = ({ onClose, buttonRef }) => {
         </div>
 
         {/* Email Field */}
-        <div className="flex-1">
+        <div className="flex-1 w-full md:w-auto">
           <input
             type="email"
             name="email"
@@ -142,8 +114,21 @@ const GetStartedForm = ({ onClose, buttonRef }) => {
           />
         </div>
 
+        {/* Phone Field */}
+        <div className="flex-1 w-full md:w-auto">
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={handleInputChange}
+            className="w-full h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+            required
+          />
+        </div>
+
         {/* Schedule A Call - Calendar Field */}
-        <div className="flex-1 relative" style={{ zIndex: 1000 }}>
+        <div className="flex-1 w-full md:w-auto relative" style={{ zIndex: 1000 }}>
           <input
             ref={calendarInputRef}
             type="text"
@@ -168,7 +153,7 @@ const GetStartedForm = ({ onClose, buttonRef }) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-cyan-400 hover:bg-cyan-500 text-black font-semibold px-8 py-3 rounded-full transition-all whitespace-nowrap"
+          className="bg-cyan-400 hover:bg-cyan-500 text-black font-semibold px-8 py-3 rounded-full transition-all whitespace-nowrap w-full md:w-auto"
         >
           Submit
         </button>

@@ -23,17 +23,39 @@ function Model({ isDragging, scrollProgress = 0 }) {
   }, [actions]);
 
   // Calculate rotation based on scroll progress
-  // At progress 0 (Hero): look left (120-130 degrees = ~2.09-2.27 radians)
-  // At progress 1 (About): look at About content (rotate to face right, ~0 radians or slightly positive)
+  // At progress 0 (Hero): look left (-55 degrees)
+  // At progress 0.5 (About): look at About content (facing right, 50 degrees)
   useFrame(() => {
     if (groupRef.current && !isDragging) {
-      // Start rotation: looking left (125 degrees = ~2.18 radians)
-      // End rotation: looking at About content (0 radians = forward/right)
-      const startRotationY = (330 * Math.PI) / 180; // ~2.18 radians (looking left)
-      const endRotationY = (50 * Math.PI) / 180; // Looking forward/right at About content
+      // Rotation angles in radians
+      // In Three.js: 0 = forward, positive = right, negative = left
+      // Looking left: -55 degrees or 305 degrees (125 degrees from forward, which is 180-55 = 125, so -55 or 305)
+      // Looking right: 50 degrees (forward-right)
+      const leftRotation = (-55 * Math.PI) / 180; // Looking left (~-0.96 radians)
+      const rightRotation = (50 * Math.PI) / 180; // Looking forward/right (~0.87 radians)
       
-      // Interpolate rotation based on scroll progress
-      const targetRotationY = startRotationY + (endRotationY - startRotationY) * scrollProgress;
+      // Ensure scrollProgress is a valid number, default to 0
+      const safeProgress = (typeof scrollProgress === 'number' && !isNaN(scrollProgress)) 
+        ? scrollProgress 
+        : 0;
+      
+      // Clamp scrollProgress to ensure it's between 0 and 1
+      const clampedProgress = Math.max(0, Math.min(1, safeProgress));
+      
+      let targetRotationY;
+      
+      if (clampedProgress <= 0.5) {
+        // From Hero (0) to About (0.5): look left to right
+        const localProgress = clampedProgress / 0.5; // 0 to 1
+        targetRotationY = leftRotation + (rightRotation - leftRotation) * localProgress;
+      } else {
+        // From About (0.5) to fly-out (1.0+): continue rotating right and add spin
+        const flyOutProgress = (clampedProgress - 0.5) / 0.5; // 0 to 1 (when clampedProgress = 1.0)
+        // Rotate from right (50 degrees) to spinning out (multiple rotations)
+        // Add extra rotation for dramatic fly-out effect
+        const extraRotation = flyOutProgress * Math.PI * 2; // One full rotation
+        targetRotationY = rightRotation + extraRotation;
+      }
       
       // Smooth interpolation for natural movement
       groupRef.current.rotation.y += (targetRotationY - groupRef.current.rotation.y) * 0.1;
@@ -47,7 +69,7 @@ function Model({ isDragging, scrollProgress = 0 }) {
   // Set initial rotation to look left
   useEffect(() => {
     if (groupRef.current) {
-      const initialRotationY = (125 * Math.PI) / 180; // ~2.18 radians (looking left)
+      const initialRotationY = (-55 * Math.PI) / 180; // Looking left
       groupRef.current.rotation.y = initialRotationY;
       groupRef.current.rotation.x = 0;
       groupRef.current.rotation.z = 0;
@@ -55,7 +77,7 @@ function Model({ isDragging, scrollProgress = 0 }) {
   }, []);
   
   return (
-    <group ref={groupRef} rotation={[0, (125 * Math.PI) / 180, 0]}>
+    <group ref={groupRef} rotation={[0, (-55 * Math.PI) / 180, 0]}>
       <primitive 
         object={scene} 
         scale={7} 
@@ -77,7 +99,7 @@ export default function RobotModel({ scrollProgress = 0 }) {
   const [isDragging, setIsDragging] = useState(false);
 
   return (
-      <div className="w-full h-full bg-transparent pointer-events-none">
+      <div className="w-full h-full bg-transparent pointer-events-none" style={{ backgroundColor: 'transparent' }}>
         <Canvas
           camera={{ position: [0, 0.2, 10], fov: 60 }}
           gl={{ 
@@ -86,9 +108,13 @@ export default function RobotModel({ scrollProgress = 0 }) {
             powerPreference: "high-performance",
             preserveDrawingBuffer: false
           }}
+          onCreated={({ gl }) => {
+            gl.setClearColor(0x000000, 0); // Transparent background
+          }}
           dpr={[1, 2]}
           style={{ 
             background: 'transparent', 
+            backgroundColor: 'transparent',
             width: '100%', 
             height: '100%',
             display: 'block',

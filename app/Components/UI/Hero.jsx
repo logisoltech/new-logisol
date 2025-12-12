@@ -1,28 +1,14 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { headingFont } from '../Font/headingFont';
-import { useState } from 'react';
 import GetStartedForm from './GetStartedForm';
 
 const Hero = () => {
-
-  const [showForm, setShowForm] = useState(false);
-  const buttonRef = useRef(null);
-
-  const handleGetStarted = (e) => {
-    e.stopPropagation();
-    setShowForm(!showForm);
-  }
-
-  const handleCloseForm = () => {
-    setShowForm(false);
-  }
-
   return (
-    <div className="relative min-h-screen flex items-start justify-center overflow-hidden pt-20 lg:pt-24" style={{ isolation: 'isolate' }}>
+    <div className="relative min-h-screen flex flex-col overflow-hidden pt-20 lg:pt-24" style={{ isolation: 'isolate' }}>
       {/* Content Container */}
-      <div className="relative z-50 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-4" style={{ isolation: 'isolate' }}>
+      <div className="relative z-50 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-4 flex-1 flex flex-col justify-between" style={{ isolation: 'isolate' }}>
         <div className="flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-12 relative z-50">
           {/* Text Content */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-2 flex-1 lg:w-1/2 relative z-50" style={{ isolation: 'isolate' }}>
@@ -36,20 +22,11 @@ const Hero = () => {
             </h1>
             <p className='text-white text-xl select-text'>Expert Services and Solutions for
             Web & Mobile App Development</p>
-            <div className="relative w-full" style={{ overflow: 'visible' }}>
-              <button 
-                ref={buttonRef}
-                onClick={handleGetStarted} 
-                className='bg-cyan-400 mt-2 hover:bg-cyan-800 hover:text-white cursor-pointer relative z-[60] text-black px-4 py-2 rounded-full pointer-events-auto'
-              >
-                Get Started
-              </button>
-              {showForm && (
-                <div className="absolute top-full left-0 w-full mt-4 z-[100]" style={{ overflow: 'visible' }}>
-                  <GetStartedForm onClose={handleCloseForm} buttonRef={buttonRef} />
-                </div>
-              )}
-            </div>
+            <button 
+              className='bg-cyan-400 mt-4 hover:bg-cyan-500 hover:text-white cursor-pointer text-black px-6 py-3 rounded-full pointer-events-auto transition-all'
+            >
+              Get Started
+            </button>
           </div>
 
           {/* 3D Model Container - Placeholder for positioning */}
@@ -59,6 +36,11 @@ const Hero = () => {
           >
             {/* Model will be positioned here by ScrollableRobot */}
           </div>
+        </div>
+
+        {/* Form positioned at end but not completely at bottom - Full width */}
+        <div className="w-full relative z-50 mt-0">
+          <GetStartedForm />
         </div>
       </div>
     </div>
