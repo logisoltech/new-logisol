@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <div className="relative min-h-screen flex flex-col overflow-hidden pt-20 lg:pt-24" style={{ isolation: 'isolate' }}>
       {/* Content Container */}
-      <div className="relative z-50 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-4 flex-1 flex flex-col justify-between" style={{ isolation: 'isolate' }}>
+      <div className="relative z-50 w-full max-w-7xl mx-auto px-6 lg:px-8 pt-4 flex-1 flex flex-col" style={{ isolation: 'isolate' }}>
         <div className="flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-12 relative z-50">
           {/* Text Content */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-2 flex-1 lg:w-1/2 relative z-50" style={{ isolation: 'isolate' }}>
@@ -27,6 +27,11 @@ const Hero = () => {
             >
               Get Started
             </button>
+
+            {/* Form positioned below button - Full width */}
+            <div className="w-full relative z-[100] mt-8 lg:mt-12" style={{ pointerEvents: 'auto' }}>
+              <GetStartedForm />
+            </div>
           </div>
 
           {/* 3D Model Container - Placeholder for positioning */}
@@ -36,11 +41,6 @@ const Hero = () => {
           >
             {/* Model will be positioned here by ScrollableRobot */}
           </div>
-        </div>
-
-        {/* Form positioned at end but not completely at bottom - Full width */}
-        <div className="w-full relative z-50 mt-0">
-          <GetStartedForm />
         </div>
       </div>
     </div>

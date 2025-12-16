@@ -82,7 +82,7 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         aboutY = aboutRect.top + aboutRect.height / 2;
       }
 
-      // Y position for hero (viewport-relative)
+      // Y position for hero (viewport-relative) - adjusted to be more centered with form at top
       const heroY = heroRect.top + heroRect.height * 0.3;
 
       // Section boundaries
@@ -165,16 +165,16 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         return;
       }
 
-      // ---------- GAP SECTION: 3-PHASE CUSTOM PATH ----------
+      // ---------- GAP SECTION: SIMPLE CURVED PATH (LEFT EXIT) ----------
       if (isInGapSection) {
         const rawGapStart = gapPageTop - windowHeight;
-        const gapStart = Math.max(rawGapStart, 0); // safety
+        const gapStart = Math.max(rawGapStart, 0);
 
         // 0 → 1 based on scroll
         let flyOutProgress = (scrollY - gapStart) / flyOutDistance;
         flyOutProgress = clamp(flyOutProgress, 0, 1);
 
-        // thoda smooth speed
+        // Smooth easing for beautiful curve
         const t = easeInOutQuad(flyOutProgress);
 
         // START POSITION (from About)
@@ -217,40 +217,33 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
           lastAboutPositionRef.current = { x: startX, y: startY };
         }
 
-        // ---------- HORIZONTAL (X) – always right side ko jaa raha hai ----------
-        const targetX = startX + windowWidth * 1.4; // kitna right jaana hai
-        const easedX = t;
-        const newX = startX + (targetX - startX) * easedX;
+        // ---------- SIMPLE CURVED PATH: Down and Left ----------
+        // Target: Left side se exit (negative X)
+        const targetX = -800; // Left side se bahar
+        const newX = startX + (targetX - startX) * t;
 
-        // ---------- VERTICAL (Y) – 3 phase path (dip → up loop → glide down) ----------
-        const dipDown = 300;    // phase 1: neeche kitna
-        const loopUp = -300;    // phase 2: upar kitna
-        const finalDown = 260;  // phase 3: end pe kitna neeche
+        // Beautiful curved path: Down with smooth curve
+        // Simple quadratic curve: starts going down, smooth arc
+        const verticalDistance = 200; // Kitna neeche jana hai
+        const curveIntensity = 80;    // Curve ki intensity
+        
+        // Smooth curved down movement
+        // t=0: no movement, t=0.5: max curve, t=1: final position
+        const curveFactor = 4 * t * (1 - t); // Smooth curve (0 to 1 and back to 0)
+        const verticalOffset = verticalDistance * t + curveFactor * curveIntensity;
+        
+        const newY = startY + verticalOffset;
 
-        let yOffset;
-
-        if (t <= 0.3) {
-          // Phase 1 → start se halka sa neeche
-          const local = t / 0.3;          // 0 → 1
-          yOffset = dipDown * local;      // 0 → +dipDown
-        } else if (t <= 0.6) {
-          // Phase 2 → neeche se upar wali loop
-          const local = (t - 0.3) / 0.3;  // 0 → 1
-          const from = dipDown;
-          const to = loopUp;              // negative = upar
-          yOffset = from + (to - from) * local;
-        } else {
-          // Phase 3 → upar se neeche long glide
-          const local = (t - 0.6) / 0.4;  // 0 → 1
-          const from = loopUp;
-          const to = finalDown;
-          yOffset = from + (to - from) * local;
-        }
-
-        const newY = startY + yOffset;
-
-        // Rotation & opacity
-        const rotationProgress = 0.5 + flyOutProgress * 2.2;
+        // Rotation: Continuous rotation with scroll
+        // About section: 0.5 (right side), Hero section: 0.0 (left side)
+        // Gap section mein quickly left side dekhne lage, phir continuous rotate
+        const fastRotationT = Math.pow(flyOutProgress, 0.6); // Fast start, quick transition
+        const baseRotation = 0.5 - (fastRotationT * 0.5); // 0.5 → 0.0 (fast transition to left)
+        
+        // Continuous rotation: scroll ke saath saath aur zyada rotate
+        // flyOutProgress increase hote hi rotation bhi increase hota rahe
+        const continuousRotation = flyOutProgress * 1.5; // Additional continuous rotation
+        const rotationProgress = baseRotation - continuousRotation; // Continuous rotation with scroll
         setScrollProgress(rotationProgress);
 
         let opacity;
@@ -312,8 +305,8 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         transform: 'translate(-50%, -50%)',
         opacity: isVisible ? position.opacity : 0,
         pointerEvents: 'none',
-        width: '600px',
-        height: '600px',
+        width: '500px',
+        height: '500px',
         maxWidth: '100vw',
         maxHeight: '100vh',
         touchAction: 'none',
