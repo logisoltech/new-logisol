@@ -33,7 +33,37 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
 
   useEffect(() => {
     const updatePosition = () => {
-      if (!heroRef?.current || !aboutRef?.current || !gapRef?.current) return;
+      // Handle case where only aboutRef is available (e.g., about-us page)
+      if (!aboutRef?.current) return;
+      
+      // If heroRef or gapRef are null, handle about-only scenario
+      if (!heroRef?.current || !gapRef?.current) {
+        // About-only mode: just position model in about section
+        const aboutRect = aboutRef.current.getBoundingClientRect();
+        const windowWidth = window.innerWidth;
+        const aboutContainer = aboutRef.current.querySelector('#about-model-container');
+        
+        let aboutX, aboutY;
+        if (aboutContainer) {
+          const aboutContainerRect = aboutContainer.getBoundingClientRect();
+          aboutX = aboutContainerRect.left + aboutContainerRect.width / 2;
+          aboutY = aboutContainerRect.top + aboutContainerRect.height / 2;
+        } else {
+          aboutX = windowWidth > 1024
+            ? aboutRect.left + aboutRect.width * 0.25
+            : aboutRect.left + aboutRect.width * 0.5;
+          aboutY = aboutRect.top + aboutRect.height / 2;
+        }
+        
+        setScrollProgress(0.5);
+        setIsVisible(true);
+        setPosition({
+          x: aboutX,
+          y: aboutY,
+          opacity: 1,
+        });
+        return;
+      }
 
       const heroRect = heroRef.current.getBoundingClientRect();
       const aboutRect = aboutRef.current.getBoundingClientRect();
@@ -298,7 +328,7 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
   return (
     <div
       ref={containerRef}
-      className="fixed pointer-events-none z-0 will-change-transform robot-model-container"
+      className="fixed pointer-events-none z-[60] will-change-transform robot-model-container"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,

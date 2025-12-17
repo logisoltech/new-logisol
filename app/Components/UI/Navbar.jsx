@@ -45,7 +45,7 @@ const Navbar = () => {
       <div className="w-[80%] mx-auto mt-6 backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full">
         <div className="w-full mx-auto px-6 py-4 flex items-center justify-between relative">
           {/* Logo */}
-          <a href="https://logisol.tech" className="flex-shrink-0 z-50 relative">
+          <a href="/" className="flex-shrink-0 z-50 relative">
             <img
               src="/logo.png"
               alt="Logisol Logo"

@@ -58,7 +58,7 @@ const Hero = () => {
       {/* ✅ FORM (90% width, centered, pinned bottom) */}
       <div
         ref={formRef}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[100] pointer-events-auto w-[90%]"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-[70] pointer-events-auto w-[80%]"
       >
         <GetStartedForm />
       </div>
