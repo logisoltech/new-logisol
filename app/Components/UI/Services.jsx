@@ -221,7 +221,7 @@ const Services = () => {
               {currentServices.map((service, index) => (
                 <div
                   key={index}
-                  className={`backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl p-6 lg:p-8 hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group ${
+                  className={`relative backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group h-72 lg:h-96 ${
                     isVisible
                       ? 'translate-y-0 opacity-100'
                       : 'translate-y-[50px] opacity-0'
@@ -230,22 +230,25 @@ const Services = () => {
                     transitionDelay: `${index * 100}ms`,
                   }}
                 >
-                  {/* Image/Icon */}
-                  <div className="w-full h-48 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center">
-                    <div className="text-6xl group-hover:scale-110 transition-transform duration-300">
+                  {/* Image/Icon - Full Cover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center">
+                    <div className="text-7xl lg:text-8xl group-hover:scale-110 transition-transform duration-300">
                       {service.image}
                     </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-white font-bold text-xl lg:text-2xl mb-3 group-hover:text-cyan-400 transition-colors duration-300">
-                    {service.title}
-                  </h3>
+                  {/* Label Container - Overlay at Bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 lg:p-4 bg-gradient-to-t from-black/80 via-black/60 to-transparent backdrop-blur-sm">
+                    {/* Title */}
+                    <h3 className="text-white font-bold text-base lg:text-lg mb-1 group-hover:text-cyan-400 transition-colors duration-300">
+                      {service.title}
+                    </h3>
 
-                  {/* Description */}
-                  <p className="text-white/70 text-sm lg:text-base leading-relaxed">
-                    {service.description}
-                  </p>
+                    {/* Description */}
+                    <p className="text-white/80 text-xs lg:text-sm leading-tight line-clamp-2">
+                      {service.description}
+                    </p>
+                  </div>
 
                   {/* Hover Effect Glow */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/0 to-cyan-400/0 group-hover:from-cyan-400/10 group-hover:to-cyan-400/5 transition-all duration-500 pointer-events-none" />

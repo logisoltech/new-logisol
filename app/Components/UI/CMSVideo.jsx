@@ -126,10 +126,10 @@ const CMSVideo = () => {
           {/* Video Container - Right Side - 70% width */}
           <div className="relative w-full lg:w-[65%] aspect-video mx-auto">
             <div
-              className={`relative w-full h-full rounded-2xl overflow-hidden backdrop-blur-2xl bg-black/40 border transition-all duration-1000 ease-out ${
+              className={`relative w-full h-full rounded-2xl overflow-hidden backdrop-blur-2xl bg-black/40 border transition-all duration-700 ease-out ${
                 isVisible
-                  ? 'translate-x-0 opacity-100'
-                  : 'translate-x-[50px] opacity-0'
+                  ? 'scale-100 opacity-100'
+                  : 'scale-75 opacity-0'
               }`}
               style={{
                 borderImage: 'linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(168, 85, 247, 0.5)) 1',

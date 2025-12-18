@@ -223,8 +223,8 @@ const Portfolio = () => {
               }}
             >
               {/* Image Placeholder */}
-              <div className="w-full h-48 lg:h-56 bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-cyan-400/20 flex items-center justify-center relative overflow-hidden">
-                <div className="text-6xl lg:text-7xl group-hover:scale-110 transition-transform duration-300">
+              <div className="w-full h-72 lg:h-80 bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-cyan-400/20 flex items-center justify-center relative overflow-hidden">
+                <div className="text-7xl lg:text-8xl group-hover:scale-110 transition-transform duration-300">
                   {item.image}
                 </div>
                 {/* Placeholder pattern overlay */}
@@ -241,11 +241,11 @@ const Portfolio = () => {
               </div>
 
               {/* Content */}
-              <div className="p-6 lg:p-8">
-                <h3 className="text-white font-bold text-xl lg:text-2xl mb-3 group-hover:text-cyan-400 transition-colors duration-300">
+              <div className="p-4 lg:p-5">
+                <h3 className="text-white font-bold text-lg lg:text-xl mb-2 group-hover:text-cyan-400 transition-colors duration-300">
                   {item.title}
                 </h3>
-                <p className="text-white/70 text-sm lg:text-base leading-relaxed">
+                <p className="text-white/70 text-xs lg:text-sm leading-relaxed">
                   {item.description}
                 </p>
               </div>

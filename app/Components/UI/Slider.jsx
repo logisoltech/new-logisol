@@ -30,9 +30,11 @@ const Slider = () => {
 
   return (
     <div
-      className={`bg-[#007ba7] md:py-3 overflow-hidden relative z-20 ${font.className}`}
+      className={`backdrop-blur-2xl bg-white/5 border-y border-white/20 md:py-3 overflow-hidden relative z-20 ${font.className}`}
     >
-      <div className="slider-container">
+      {/* Glass gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-purple-500/10 pointer-events-none" />
+      <div className="slider-container relative z-10">
         <div className="slider-track">
           {/* First set of icons */}
           {technologies.map((tech, index) => {
