@@ -3,10 +3,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { headingFont } from '../Font/headingFont';
 
-const Portfolio = () => {
+const Portfolio = ({ defaultTab = 'Web Development' }) => {
   const portfolioSectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState('Web Development');
+  const [activeTab, setActiveTab] = useState(defaultTab);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

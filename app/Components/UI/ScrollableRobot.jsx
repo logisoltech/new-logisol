@@ -50,11 +50,17 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
                                aboutRef.current.querySelector('#seo-services-model-container') ||
                                aboutRef.current.querySelector('#social-media-model-container');
         
+        // Check if it's a sub-service page (not the main about page)
+        const isSubServicePage = aboutContainer && !aboutRef.current.querySelector('#about-model-container');
+        
         let aboutX, aboutY;
         if (aboutContainer) {
           const aboutContainerRect = aboutContainer.getBoundingClientRect();
           aboutX = aboutContainerRect.left + aboutContainerRect.width / 2;
-          aboutY = aboutContainerRect.top + aboutContainerRect.height / 2;
+          // Push model upwards on sub-service pages
+          aboutY = isSubServicePage 
+            ? aboutContainerRect.top + aboutContainerRect.height / 2 - 60
+            : aboutContainerRect.top + aboutContainerRect.height / 2;
         } else {
           aboutX = windowWidth > 1024
             ? aboutRect.left + aboutRect.width * 0.25
@@ -62,7 +68,8 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
           aboutY = aboutRect.top + aboutRect.height / 2;
         }
         
-        setScrollProgress(0.5);
+        // For sub-service pages: look left (0), for about page: look right (0.5)
+        setScrollProgress(isSubServicePage ? 0 : 0.5);
         setIsVisible(true);
         setPosition({
           x: aboutX,

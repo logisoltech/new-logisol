@@ -38,8 +38,10 @@ const Page = () => {
       <section ref={servicesRef} className="relative">
         <Services />
       </section>
-      <Pricing/>
-      <FAQ/>
+      <Portfolio />
+      <CaseStudy />
+      <Pricing />
+      <FAQ />
       <Footer/>
     </main>
   );

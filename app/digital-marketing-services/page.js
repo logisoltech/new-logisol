@@ -7,6 +7,8 @@ import Slider from '../Components/UI/Slider';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
 import Pricing from '../Components/UI/Pricing';
+import CaseStudy from '../Components/UI/CaseStudy';
+import Portfolio from '../Components/UI/Portfolio';
 import { headingFont } from '../Components/Font/headingFont';
 
 const Page = () => {
@@ -172,41 +174,76 @@ const Page = () => {
         <div className="absolute inset-0 w-full h-full flex items-center py-16 lg:py-24">
           <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
-              <div ref={leftAreaRef} className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 flex-1 lg:w-1/2">
-                <div className="relative w-full max-w-2xl min-h-[260px]">
-                  {paragraphs.map((para, index) => (
-                    <div
-                      key={index}
-                      className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                        index === activeParagraph
-                          ? 'opacity-100 translate-y-0'
-                          : 'opacity-0 translate-y-8 pointer-events-none'
-                      }`}
-                    >
-                      <h2 className={`${headingFont.className} font-bold text-2xl md:text-3xl text-white mb-4`}>
-                        {para.heading}
-                      </h2>
-                      <p className="text-white/90 text-lg md:text-xl leading-relaxed">
-                        {para.text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex gap-2 mt-8">
-                  {paragraphs.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        index === activeParagraph ? 'bg-cyan-400 w-8' : 'bg-white/20 w-2'
-                      }`}
+              {/* Text Content - Left Side */}
+              <div ref={leftAreaRef} className="flex items-start gap-6 lg:gap-8 flex-1 lg:w-1/2">
+                {/* Vertical Scroll Progress Bar */}
+                <div className="hidden lg:flex flex-col items-center gap-1 py-2">
+                  {/* Progress Track */}
+                  <div className="relative w-1 h-48 bg-white/10 rounded-full overflow-hidden">
+                    {/* Progress Fill */}
+                    <div 
+                      className="absolute top-0 left-0 w-full bg-gradient-to-b from-cyan-400 to-cyan-500 rounded-full transition-all duration-500 ease-out"
+                      style={{ 
+                        height: `${((activeParagraph + 1) / paragraphs.length) * 100}%` 
+                      }}
                     />
-                  ))}
+                    {/* Dot Indicators */}
+                    {paragraphs.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full border-2 transition-all duration-300 ${
+                          index <= activeParagraph 
+                            ? 'bg-cyan-400 border-cyan-400 scale-100' 
+                            : 'bg-transparent border-white/30 scale-75'
+                        }`}
+                        style={{ 
+                          top: `${(index / (paragraphs.length - 1)) * 100}%`,
+                          transform: `translate(-50%, -50%)`
+                        }}
+                      />
+                    ))}
+                  </div>
+                  {/* Current / Total */}
+                  <span className="text-cyan-400 font-medium text-sm mt-2">
+                    {activeParagraph + 1}/{paragraphs.length}
+                  </span>
                 </div>
 
-                <p className="text-white/40 text-sm">
-                  
-                </p>
+                {/* Content */}
+                <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 flex-1">
+                  {/* Paragraph Container */}
+                  <div className="relative w-full max-w-2xl min-h-[260px]">
+                    {paragraphs.map((para, index) => (
+                      <div
+                        key={index}
+                        className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                          index === activeParagraph
+                            ? 'opacity-100 translate-y-0'
+                            : 'opacity-0 translate-y-8 pointer-events-none'
+                        }`}
+                      >
+                        <h2 className={`${headingFont.className} font-bold text-2xl md:text-3xl text-white mb-4`}>
+                          {para.heading}
+                        </h2>
+                        <p className="text-white/90 text-lg md:text-xl leading-relaxed">
+                          {para.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Mobile Progress Dots */}
+                  <div className="flex lg:hidden gap-2 mt-8">
+                    {paragraphs.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          index === activeParagraph ? 'bg-cyan-400 w-8' : 'bg-white/20 w-2'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
 
               <div ref={rightAreaRef} className="relative w-full lg:w-1/2">
@@ -220,6 +257,8 @@ const Page = () => {
         </div>
       </section>
 
+      <Portfolio defaultTab="Digital Marketing" />
+      <CaseStudy />
       <Pricing defaultTab="SEO" hideTabs={true} />
 
       <section ref={pageRef} className="relative">

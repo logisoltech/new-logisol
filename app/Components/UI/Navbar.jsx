@@ -53,19 +53,17 @@ const Navbar = () => {
             />
           </a>
 
-          {/* Search Bar - Centered */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 hidden lg:block">
-            <div className="max-w-md w-full">
+          {/* Right side - Search, Country Selector and Menu */}
+          <div className="flex items-center gap-4 ml-auto">
+            {/* Search Bar */}
+            <div className="hidden lg:block">
               <input
                 type="text"
                 placeholder="Search..."
-                className="w-full h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+                className="w-48 xl:w-64 h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
               />
             </div>
-          </div>
 
-          {/* Right side - Country Selector and Menu */}
-          <div className="flex items-center gap-4 ml-auto">
             {/* Country Selector */}
             <div className="hidden lg:block">
               <CountrySelector />
@@ -78,7 +76,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Search Bar */}
-          <div className="lg:hidden flex-1 max-w-xs mx-8 mr-6">
+          <div className="lg:hidden flex-1 max-w-xs mx-4">
             <input
               type="text"
               placeholder="Search..."
