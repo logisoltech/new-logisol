@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { headingFont } from '../Font/headingFont';
 
-const Pricing = () => {
+const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
   const pricingSectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState('Web Development');
+  const [activeTab, setActiveTab] = useState(defaultTab);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -254,22 +254,24 @@ const Pricing = () => {
             Affordable <span className="text-cyan-400">plans</span> for every business
           </h2>
 
-          {/* Tab Navigation */}
-          <div className="flex flex-wrap gap-3 lg:gap-4 overflow-x-auto pb-2">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 lg:px-6 lg:py-3 rounded-full text-sm lg:text-base font-medium transition-all duration-300 whitespace-nowrap ${
-                  activeTab === tab
-                    ? 'bg-white/10 text-white backdrop-blur-sm border border-white/20 shadow-lg'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+          {/* Tab Navigation - Hidden when hideTabs is true */}
+          {!hideTabs && (
+            <div className="flex flex-wrap gap-3 lg:gap-4 overflow-x-auto pb-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-2 lg:px-6 lg:py-3 rounded-full text-sm lg:text-base font-medium transition-all duration-300 whitespace-nowrap ${
+                    activeTab === tab
+                      ? 'bg-white/10 text-white backdrop-blur-sm border border-white/20 shadow-lg'
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Content Grid - Horizontal Scrollable Carousel */}

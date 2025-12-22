@@ -8,6 +8,7 @@ import Services from '../Components/UI/Services';
 import { headingFont } from '../Components/Font/headingFont';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
+import Pricing from '../Components/UI/Pricing';
 
 const Page = () => {
   const servicesRef = useRef(null);
@@ -37,6 +38,7 @@ const Page = () => {
       <section ref={servicesRef} className="relative">
         <Services />
       </section>
+      <Pricing/>
       <FAQ/>
       <Footer/>
     </main>

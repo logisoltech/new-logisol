@@ -41,7 +41,14 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         // About-only mode: just position model in about section
         const aboutRect = aboutRef.current.getBoundingClientRect();
         const windowWidth = window.innerWidth;
-        const aboutContainer = aboutRef.current.querySelector('#about-model-container');
+        const aboutContainer = aboutRef.current.querySelector('#about-model-container') || 
+                               aboutRef.current.querySelector('#custom-web-model-container') ||
+                               aboutRef.current.querySelector('#digital-marketing-model-container') ||
+                               aboutRef.current.querySelector('#graphics-designing-model-container') ||
+                               aboutRef.current.querySelector('#mobile-app-model-container') ||
+                               aboutRef.current.querySelector('#video-editing-model-container') ||
+                               aboutRef.current.querySelector('#seo-services-model-container') ||
+                               aboutRef.current.querySelector('#social-media-model-container');
         
         let aboutX, aboutY;
         if (aboutContainer) {
@@ -79,7 +86,14 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
 
       // Try to get dedicated model containers in each section
       const heroContainer = heroRef.current.querySelector('#hero-model-container');
-      const aboutContainer = aboutRef.current.querySelector('#about-model-container');
+      const aboutContainer = aboutRef.current.querySelector('#about-model-container') || 
+                               aboutRef.current.querySelector('#custom-web-model-container') ||
+                               aboutRef.current.querySelector('#digital-marketing-model-container') ||
+                               aboutRef.current.querySelector('#graphics-designing-model-container') ||
+                               aboutRef.current.querySelector('#mobile-app-model-container') ||
+                               aboutRef.current.querySelector('#video-editing-model-container') ||
+                               aboutRef.current.querySelector('#seo-services-model-container') ||
+                               aboutRef.current.querySelector('#social-media-model-container');
 
       let heroContainerX, aboutContainerX;
 

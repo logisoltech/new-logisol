@@ -94,16 +94,14 @@ const CMSVideo = () => {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 w-[75%] mx-auto px-6 lg:px-8 py-20">
+      <div className={`relative z-10 w-[75%] mx-auto px-6 lg:px-8 py-20 transition-all duration-700 ease-out ${
+        isVisible
+          ? 'scale-100 opacity-100'
+          : 'scale-75 opacity-0'
+      }`}>
         <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
           {/* Text Content - Left Side - 30% width */}
-          <div
-            className={`flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 w-full lg:w-[35%] transition-all duration-1000 ease-out ${
-              isVisible
-                ? 'translate-x-0 opacity-100'
-                : 'translate-x-[-50px] opacity-0'
-            }`}
-          >
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 w-full lg:w-[35%]">
             <h2
               className={`${headingFont.className} font-extrabold text-4xl md:text-2xl lg:text-2xl xl:text-5xl leading-tight text-white tracking-tight`}
               style={{
@@ -126,11 +124,7 @@ const CMSVideo = () => {
           {/* Video Container - Right Side - 70% width */}
           <div className="relative w-full lg:w-[65%] aspect-video mx-auto">
             <div
-              className={`relative w-full h-full rounded-2xl overflow-hidden backdrop-blur-2xl bg-black/40 border transition-all duration-700 ease-out ${
-                isVisible
-                  ? 'scale-100 opacity-100'
-                  : 'scale-75 opacity-0'
-              }`}
+              className="relative w-full h-full rounded-2xl overflow-hidden backdrop-blur-2xl bg-black/40 border"
               style={{
                 borderImage: 'linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(168, 85, 247, 0.5)) 1',
                 borderWidth: '2px',
