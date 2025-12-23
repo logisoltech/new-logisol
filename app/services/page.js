@@ -9,6 +9,8 @@ import { headingFont } from '../Components/Font/headingFont';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
 import Pricing from '../Components/UI/Pricing';
+import Portfolio from '../Components/UI/Portfolio';
+import CaseStudy from '../Components/UI/CaseStudy';
 
 const Page = () => {
   const servicesRef = useRef(null);
