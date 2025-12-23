@@ -50,17 +50,20 @@ const Services = () => {
       {
         title: 'Custom Web Applications',
         description: 'Build powerful, scalable web applications tailored to your business needs.',
-        image: '🌐',
+        image: '/custom-web.jpeg',
+        isImage: true,
       },
       {
         title: 'E-Commerce Solutions',
         description: 'Complete online store solutions with payment integration and inventory management.',
-        image: '🛒',
+        image: '/ecom.png',
+        isImage: true,
       },
       {
         title: 'Progressive Web Apps',
         description: 'Modern PWAs that work seamlessly across all devices and platforms.',
-        image: '📱',
+        image: '/web-app.png',
+        isImage: true,
       },
     ],
     'Mobile Development': [
@@ -231,11 +234,22 @@ const Services = () => {
                   }}
                 >
                   {/* Image/Icon - Full Cover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center">
-                    <div className="text-7xl lg:text-8xl group-hover:scale-110 transition-transform duration-300">
-                      {service.image}
-                    </div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 to-purple-500/20 flex items-center justify-center overflow-hidden">
+                    {service.isImage ? (
+                      <img 
+                        src={service.image} 
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    ) : (
+                      <div className="text-7xl lg:text-8xl group-hover:scale-110 transition-transform duration-300">
+                        {service.image}
+                      </div>
+                    )}
                   </div>
+
+                  {/* Dark Overlay for text visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/60 pointer-events-none" />
 
                   {/* Label - Top Left */}
                   <div className="absolute top-4 left-4 z-10">
