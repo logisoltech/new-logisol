@@ -65,7 +65,7 @@ const Page = () => {
                 {/* Description Paragraph Box */}
                 <div className="bg-cyan-400/20 backdrop-blur-sm rounded-2xl p-5 lg:p-6 border border-cyan-400/30">
                   <p className="text-white/90 text-sm md:text-base leading-relaxed">
-                    At Logisol Tech, we don&apos;t just build websites or write code—we build scalable digital solutions that help businesses compete, grow, and lead in the modern world. We are a results-driven software house offering a wide range of services that include Web Development, App Development, SEO, Social Media Marketing, Graphic Design, and Video Editing—each tailored to suit your industry and business goals.
+                    At Logisol Tech, we don&apos;t just build websites or write code, we build scalable digital solutions that help businesses compete, grow, and lead in the modern world. We are a results-driven software house offering a wide range of services that include Web Development, App Development, SEO, Social Media Marketing, Graphic Design, and Video Editing, each tailored to suit your industry and business goals.
                   </p>
                 </div>
 

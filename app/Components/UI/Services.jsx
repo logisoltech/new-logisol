@@ -70,17 +70,20 @@ const Services = () => {
       {
         title: 'iOS App Development',
         description: 'Native iOS applications built with Swift and modern iOS frameworks.',
-        image: '📱',
+        image: '/ios.png',
+        isImage: true,
       },
       {
         title: 'Android App Development',
         description: 'Robust Android applications using Kotlin and Jetpack Compose.',
-        image: '🤖',
+        image: '/android.png',
+        isImage: true,
       },
       {
         title: 'Cross-Platform Apps',
         description: 'React Native and Flutter apps for maximum reach and efficiency.',
-        image: '⚛️',
+        image: '/cross-platform.png',
+        isImage: true,
       },
     ],
     'Digital Marketing': [

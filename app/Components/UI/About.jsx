@@ -76,6 +76,9 @@ const About = () => {
                 team of expert developers, designers, and strategists, we deliver cutting-edge
                 technology that drives business growth.
               </p>
+              <p>
+                Founded by a team of tech-savvy innovators and digital strategists, Logisol Tech was born out of a simple idea: to bridge the gap between business vision and technology. With our roots in innovation and a stronghold in execution, we deliver real-world solutions powered by strategy, design, and code.
+              </p>
             </div>
           </div>
         </div>
