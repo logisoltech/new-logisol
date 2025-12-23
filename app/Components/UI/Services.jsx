@@ -237,17 +237,11 @@ const Services = () => {
                     </div>
                   </div>
 
-                  {/* Label Container - Overlay at Bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-3 lg:p-4 bg-gradient-to-t from-black/80 via-black/60 to-transparent backdrop-blur-sm">
-                    {/* Title */}
-                    <h3 className="text-white font-bold text-base lg:text-lg mb-1 group-hover:text-cyan-400 transition-colors duration-300">
+                  {/* Label - Top Left */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <h3 className="text-white font-bold text-base lg:text-lg group-hover:text-cyan-400 transition-all duration-300">
                       {service.title}
                     </h3>
-
-                    {/* Description */}
-                    <p className="text-white/80 text-xs lg:text-sm leading-tight line-clamp-2">
-                      {service.description}
-                    </p>
                   </div>
 
                   {/* Hover Effect Glow */}
