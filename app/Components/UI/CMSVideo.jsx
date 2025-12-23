@@ -61,10 +61,16 @@ const CMSVideo = () => {
   return (
     <div
       ref={videoSectionRef}
-      className="relative flex items-center justify-center overflow-hidden"
+      className="relative flex items-center justify-center overflow-hidden py-8"
     >
-      {/* Beautiful Dark Themed Background - 80% width */}
-      <div className="absolute inset-y-0 left-1/2 rounded-xl -translate-x-1/2 w-[80%] bg-gradient-to-br from-gray-950 via-gray-900 to-black">
+      {/* Animated Container - Whole section pops up */}
+      <div className={`relative w-[80%] transition-all duration-700 ease-out ${
+        isVisible
+          ? 'scale-100 opacity-100'
+          : 'scale-75 opacity-0'
+      }`}>
+      {/* Beautiful Dark Themed Background */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-gray-950 via-gray-900 to-black">
         {/* Animated Gradient Orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
@@ -94,11 +100,7 @@ const CMSVideo = () => {
       </div>
 
       {/* Content Container */}
-      <div className={`relative z-10 w-[75%] mx-auto px-6 lg:px-8 py-20 transition-all duration-700 ease-out ${
-        isVisible
-          ? 'scale-100 opacity-100'
-          : 'scale-75 opacity-0'
-      }`}>
+      <div className="relative z-10 w-full mx-auto px-6 lg:px-8 py-20">
         <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
           {/* Text Content - Left Side - 30% width */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 w-full lg:w-[35%]">
@@ -226,6 +228,7 @@ const CMSVideo = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

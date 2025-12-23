@@ -1,24 +1,17 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Navbar from '../Components/UI/Navbar';
-import AboutUsContent from '../Components/UI/AboutUsContent';
 import CaseStudy from '../Components/UI/CaseStudy';
-import ScrollableRobot from '../Components/UI/ScrollableRobot';
 import Slider from '../Components/UI/Slider';
 import { headingFont } from '../Components/Font/headingFont';
-import Pricing from '../Components/UI/Pricing';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
 
 const Page = () => {
-  const aboutRef = useRef(null);
-
   return (
     <main className="text-white relative">
       <Navbar />
-
-      <ScrollableRobot heroRef={null} aboutRef={aboutRef} gapRef={null} servicesRef={null} />
 
       {/* Heading Section */}
       <div className="flex items-center justify-center h-[30rem]">
@@ -36,7 +29,7 @@ const Page = () => {
       <Slider />
 
       {/* About Content Section */}
-      <section ref={aboutRef} className="relative">
+      <section className="relative">
         {/* <AboutUsContent /> */}
         
         {/* Static About Section */}
