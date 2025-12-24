@@ -242,7 +242,7 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
           {currentContent.map((item, index) => (
             <div
               key={index}
-              className="relative backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[calc(33.333vw-1.5rem)] xl:w-[calc(30vw-1.5rem)] h-72 lg:h-96"
+              className="relative backdrop-blur-xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:border-cyan-400/50 cursor-pointer group flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[calc(33.333vw-1.5rem)] xl:w-[calc(30vw-1.5rem)] h-72 lg:h-96 transition-colors duration-300"
               style={{
                 transitionDelay: `${index * 50}ms`,
               }}
@@ -253,7 +253,8 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
                   <img 
                     src={item.image} 
                     alt={item.title}
-                    className="w-full h-[200%] object-cover object-top transition-all duration-700 ease-out group-hover:translate-y-[-50%]"
+                    className="w-full h-[200%] object-cover object-top transition-transform duration-700 ease-out group-hover:translate-y-[-50%]"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-cyan-400/20 flex items-center justify-center">

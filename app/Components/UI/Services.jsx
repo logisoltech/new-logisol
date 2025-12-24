@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { headingFont } from '../Font/headingFont';
 
 const Services = () => {
@@ -52,18 +53,21 @@ const Services = () => {
         description: 'Build powerful, scalable web applications tailored to your business needs.',
         image: '/custom-web.jpeg',
         isImage: true,
+        link: '/custom-web-development-services',
       },
       {
         title: 'E-Commerce Solutions',
         description: 'Complete online store solutions with payment integration and inventory management.',
         image: '/ecom.png',
         isImage: true,
+        link: '/custom-web-development-services',
       },
       {
         title: 'Progressive Web Apps',
         description: 'Modern PWAs that work seamlessly across all devices and platforms.',
         image: '/web-app.png',
         isImage: true,
+        link: '/custom-web-development-services',
       },
     ],
     'Mobile Development': [
@@ -72,18 +76,21 @@ const Services = () => {
         description: 'Native iOS applications built with Swift and modern iOS frameworks.',
         image: '/ios.png',
         isImage: true,
+        link: '/mobile-application-development-services',
       },
       {
         title: 'Android App Development',
         description: 'Robust Android applications using Kotlin and Jetpack Compose.',
         image: '/android.png',
         isImage: true,
+        link: '/mobile-application-development-services',
       },
       {
         title: 'Cross-Platform Apps',
         description: 'React Native and Flutter apps for maximum reach and efficiency.',
         image: '/cross-platform.png',
         isImage: true,
+        link: '/mobile-application-development-services',
       },
     ],
     'Digital Marketing': [
@@ -92,18 +99,21 @@ const Services = () => {
         description: 'Improve your search engine rankings and drive organic traffic.',
         image: '/seo.png',
         isImage: true,
+        link: '/seo-services-and-strategy',
       },
       {
         title: 'Social Media Marketing',
         description: 'Engage your audience and grow your brand presence on social platforms.',
         image: '/smm.png',
         isImage: true,
+        link: '/social-media-marketing-services',
       },
       {
         title: 'Content Marketing',
         description: 'Strategic content creation to attract and convert your target audience.',
         image: '/cm.png',
         isImage: true,
+        link: '/digital-marketing-services',
       },
     ],
     'Graphic Design': [
@@ -112,18 +122,21 @@ const Services = () => {
         description: 'Create a memorable brand identity that resonates with your audience.',
         image: '/brand.png',
         isImage: true,
+        link: '/graphics-designing-services',
       },
       {
         title: 'UI/UX Design',
         description: 'User-centered designs that enhance user experience and engagement.',
         image: '/uiux.png',
         isImage: true,
+        link: '/graphics-designing-services',
       },
       {
         title: 'Print Design',
         description: 'Professional print materials including brochures, flyers, and business cards.',
         image: '/print.png',
         isImage: true,
+        link: '/graphics-designing-services',
       },
     ],
     'Video Editing': [
@@ -132,18 +145,21 @@ const Services = () => {
         description: 'Professional video production for marketing, training, and entertainment.',
         image: '/prod.jpg',
         isImage: true,
+        link: '/professional-video-editing-services',
       },
       {
         title: 'Video Editing',
         description: 'Expert video editing services to bring your vision to life.',
         image: '/vid-edit.jpg',
         isImage: true,
+        link: '/professional-video-editing-services',
       },
       {
         title: 'Motion Graphics',
         description: 'Dynamic motion graphics and animations for engaging visual content.',
         image: '/motion.png',
         isImage: true,
+        link: '/professional-video-editing-services',
       },
     ],
     'All Services': [
@@ -152,30 +168,35 @@ const Services = () => {
         description: 'Custom web applications built with modern technologies.',
         image: '/custom-web.jpeg',
         isImage: true,
+        link: '/custom-web-development-services',
       },
       {
         title: 'Mobile Development',
         description: 'Native and cross-platform mobile applications.',
         image: '/ios.png',
         isImage: true,
+        link: '/mobile-application-development-services',
       },
       {
         title: 'Digital Marketing',
         description: 'Strategic marketing solutions to grow your online presence.',
         image: '/seo.png',
         isImage: true,
+        link: '/digital-marketing-services',
       },
       {
         title: 'Graphic Design',
         description: 'Beautiful, intuitive designs that enhance user experience.',
         image: '/brand.png',
         isImage: true,
+        link: '/graphics-designing-services',
       },
       {
         title: 'Video Editing',
         description: 'Professional video editing and production services.',
         image: '/vid-edit.jpg',
         isImage: true,
+        link: '/professional-video-editing-services',
       },
     ],
   };
@@ -234,9 +255,10 @@ const Services = () => {
           <div className="flex-1">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {currentServices.map((service, index) => (
-                <div
+                <Link
                   key={index}
-                  className={`relative backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group h-72 lg:h-96 ${
+                  href={service.link || '/services'}
+                  className={`relative backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group h-72 lg:h-96 block ${
                     isVisible
                       ? 'translate-y-0 opacity-100'
                       : 'translate-y-[50px] opacity-0'
@@ -272,7 +294,7 @@ const Services = () => {
 
                   {/* Hover Effect Glow */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/0 to-cyan-400/0 group-hover:from-cyan-400/10 group-hover:to-cyan-400/5 transition-all duration-500 pointer-events-none" />
-                </div>
+                </Link>
               ))}
             </div>
           </div>
