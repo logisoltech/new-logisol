@@ -47,24 +47,49 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
   const portfolioContent = {
     'Web Development': [
       {
-        title: 'Custom Web Applications',
-        description: 'Build powerful, scalable web applications tailored to your business needs.',
-        image: '🌐',
+        title: 'Fashion Hub',
+        image: '/fashion-hub.png',
+        isImage: true,
       },
       {
-        title: 'E-Commerce Solutions',
-        description: 'Complete online store solutions with payment integration and inventory management.',
-        image: '🛒',
+        title: 'DriveEasy Rentals',
+        image: '/driveeasy-rentals.jpg',
+        isImage: true,
       },
       {
-        title: 'Progressive Web Apps',
-        description: 'Modern PWAs that work seamlessly across all devices and platforms.',
-        image: '📱',
+        title: 'Car Detailing Website',
+        image: '/cardetailing-website.jpg',
+        isImage: true,
       },
       {
-        title: 'Full-Stack Development',
-        description: 'End-to-end web solutions from frontend to backend infrastructure.',
-        image: '⚡',
+        title: 'BeautyGlow Cosmetics',
+        image: '/beautyglow-cosmetics.png',
+        isImage: true,
+      },
+      {
+        title: 'SPYRO Gym',
+        image: '/SPYRO-gym.png',
+        isImage: true,
+      },
+      {
+        title: 'SmileCare Dental',
+        image: '/smilecare-dental.png',
+        isImage: true,
+      },
+      {
+        title: 'Medicare Plus',
+        image: '/medicare-plus.png',
+        isImage: true,
+      },
+      {
+        title: 'Home Hero',
+        image: '/home-hero.png',
+        isImage: true,
+      },
+      {
+        title: 'Spa Care',
+        image: '/spa-care.jpg',
+        isImage: true,
       },
     ],
     'Mobile Development': [
@@ -217,37 +242,36 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
           {currentContent.map((item, index) => (
             <div
               key={index}
-              className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[calc(33.333vw-1.5rem)] xl:w-[calc(30vw-1.5rem)]"
+              className="relative backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[calc(33.333vw-1.5rem)] xl:w-[calc(30vw-1.5rem)] h-72 lg:h-96"
               style={{
                 transitionDelay: `${index * 50}ms`,
               }}
             >
-              {/* Image Placeholder */}
-              <div className="w-full h-72 lg:h-80 bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-cyan-400/20 flex items-center justify-center relative overflow-hidden">
-                <div className="text-7xl lg:text-8xl group-hover:scale-110 transition-transform duration-300">
-                  {item.image}
-                </div>
-                {/* Placeholder pattern overlay */}
-                <div className="absolute inset-0 opacity-10">
-                  <div
-                    className="w-full h-full"
-                    style={{
-                      backgroundImage: `
-                        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)
-                      `,
-                    }}
+              {/* Image - Full Cover with Slide Down Effect on Hover */}
+              <div className="absolute inset-0 overflow-hidden">
+                {item.isImage ? (
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-[200%] object-cover object-top transition-all duration-700 ease-out group-hover:translate-y-[-50%]"
                   />
-                </div>
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-cyan-400/20 flex items-center justify-center">
+                    <div className="text-7xl lg:text-8xl group-hover:scale-110 transition-transform duration-300">
+                      {item.image}
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Content */}
-              <div className="p-4 lg:p-5">
-                <h3 className="text-white font-bold text-lg lg:text-xl mb-2 group-hover:text-cyan-400 transition-colors duration-300">
+              {/* Dark Overlay for text visibility */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40 pointer-events-none" />
+
+              {/* Label - Top Left */}
+              <div className="absolute top-4 left-4 z-10">
+                <h3 className="text-white font-bold text-base lg:text-lg group-hover:text-cyan-400 transition-all duration-300">
                   {item.title}
                 </h3>
-                <p className="text-white/70 text-xs lg:text-sm leading-relaxed">
-                  {item.description}
-                </p>
               </div>
 
               {/* Hover Effect Glow */}
