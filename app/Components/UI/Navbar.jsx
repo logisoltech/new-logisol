@@ -133,7 +133,7 @@ const Navbar = () => {
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search services..."
+                  placeholder="Search"
                   value={searchQuery}
                   onChange={(e) => handleSearch(e.target.value)}
                   onFocus={() => setIsSearchFocused(true)}
