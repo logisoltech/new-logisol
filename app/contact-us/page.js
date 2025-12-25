@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import Navbar from '../Components/UI/Navbar';
 import ScrollableRobot from '../Components/UI/ScrollableRobot';
 import Slider from '../Components/UI/Slider';
@@ -11,6 +12,7 @@ import { useCountry } from '../context/CountryContext';
 
 const Page = () => {
   const contactRef = useRef(null);
+  const formRef = useRef(null);
   const { getContactInfo } = useCountry();
   const contact = getContactInfo();
   const [formData, setFormData] = useState({
@@ -21,6 +23,8 @@ const Page = () => {
     message: '',
     notRobot: false
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -30,10 +34,43 @@ const Page = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          contact: formData.mobile,
+          budget: '',
+          message: formData.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitStatus('success');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        mobile: '',
+        email: '',
+        message: '',
+        notRobot: false
+      });
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   return (
@@ -215,10 +252,37 @@ const Page = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="bg-gradient-to-r from-sky-500 to-sky-900 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-lg font-semibold transition-all shadow-lg"
+                disabled={isSubmitting}
+                className={`px-8 py-3 rounded-lg font-semibold transition-all shadow-lg flex items-center gap-2 ${
+                  isSubmitting
+                    ? 'bg-gray-600 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-sky-500 to-sky-900 hover:from-blue-700 hover:to-blue-800'
+                } text-white`}
               >
-                Submit Message
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  'Submit Message'
+                )}
               </button>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="mt-4 p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-400">
+                  ✓ Message sent successfully! We'll get back to you soon.
+                </div>
+              )}
+              {submitStatus === 'error' && (
+                <div className="mt-4 p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-400">
+                  ✕ Failed to send message. Please try again or contact us directly.
+                </div>
+              )}
             </div>
           </form>
         </div>

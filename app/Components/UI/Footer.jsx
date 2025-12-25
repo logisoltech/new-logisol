@@ -1,16 +1,45 @@
 'use client';
 
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { headingFont } from '../Font/headingFont';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle newsletter subscription
-    console.log('Newsletter subscription:', email);
-    setEmail('');
+    if (!email) return;
+    
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          first_name: 'Newsletter',
+          last_name: 'Subscriber',
+          email: email,
+          contact: 'N/A',
+          budget: '',
+          message: `New newsletter subscription request from: ${email}`,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitStatus('success');
+      setEmail('');
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   const quickLinks = [
@@ -54,14 +83,52 @@ const Footer = () => {
             </p>
             
             {/* Email Input */}
-            <form onSubmit={handleSubmit}>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Your Email"
-                className="w-full px-4 py-3 backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:border-cyan-400/50 focus:bg-white/15 transition-all duration-300"
-              />
+            <form onSubmit={handleSubmit} className="relative">
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Your Email"
+                  disabled={isSubmitting}
+                  className="flex-1 px-4 py-3 backdrop-blur-xl bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:border-cyan-400/50 focus:bg-white/15 transition-all duration-300 disabled:opacity-50"
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`px-4 py-3 rounded-lg font-semibold transition-all flex items-center justify-center ${
+                    isSubmitting
+                      ? 'bg-gray-600 cursor-not-allowed'
+                      : submitStatus === 'success'
+                      ? 'bg-green-500'
+                      : submitStatus === 'error'
+                      ? 'bg-red-500'
+                      : 'bg-cyan-400 hover:bg-cyan-500'
+                  } text-black`}
+                >
+                  {isSubmitting ? (
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  ) : submitStatus === 'success' ? (
+                    <span className="text-white">✓</span>
+                  ) : submitStatus === 'error' ? (
+                    <span className="text-white">✕</span>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {submitStatus === 'success' && (
+                <p className="text-green-400 text-sm mt-2">✓ Subscribed successfully!</p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-red-400 text-sm mt-2">✕ Failed. Please try again.</p>
+              )}
             </form>
           </div>
 

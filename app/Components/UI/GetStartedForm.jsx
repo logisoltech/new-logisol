@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import emailjs from '@emailjs/browser';
 import Calendar from './Calendar';
 
 const GetStartedForm = () => {
@@ -13,6 +14,8 @@ const GetStartedForm = () => {
   });
   const [showCalendar, setShowCalendar] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
   const calendarInputRef = useRef(null);
   const calendarContainerRef = useRef(null);
 
@@ -66,11 +69,46 @@ const GetStartedForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // You can add your form submission logic here
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Split name into first and last
+      const nameParts = formData.name.trim().split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          first_name: firstName,
+          last_name: lastName,
+          email: formData.email,
+          contact: formData.phone,
+          budget: '',
+          message: `Schedule a call request for: ${formData.scheduleDate ? formatDate(formData.scheduleDate) : 'Not specified'}`,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitStatus('success');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        scheduleDate: null
+      });
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   const formatDate = (date) => {
@@ -153,9 +191,32 @@ const GetStartedForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="bg-cyan-400 hover:bg-cyan-500 text-black font-semibold px-8 py-3 rounded-full transition-all whitespace-nowrap w-full md:w-auto"
+          disabled={isSubmitting}
+          className={`font-semibold px-8 py-3 rounded-full transition-all whitespace-nowrap w-full md:w-auto flex items-center justify-center gap-2 ${
+            isSubmitting
+              ? 'bg-gray-500 cursor-not-allowed text-white'
+              : submitStatus === 'success'
+              ? 'bg-green-500 text-white'
+              : submitStatus === 'error'
+              ? 'bg-red-500 text-white'
+              : 'bg-cyan-400 hover:bg-cyan-500 text-black'
+          }`}
         >
-          Submit
+          {isSubmitting ? (
+            <>
+              <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Sending...
+            </>
+          ) : submitStatus === 'success' ? (
+            '✓ Sent!'
+          ) : submitStatus === 'error' ? (
+            '✕ Failed'
+          ) : (
+            'Submit'
+          )}
         </button>
       </form>
     </div>
