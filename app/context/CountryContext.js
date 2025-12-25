@@ -35,6 +35,27 @@ export const CountryProvider = ({ children }) => {
     }
   };
 
+  // Contact information per country
+  const contactInfo = {
+    US: {
+      phone: '(415) 969-4133',
+      phoneLink: 'tel:+14159694133',
+      address: '1001 S Main St Kalispell, Montana, USA',
+      addressLink: 'https://maps.google.com/?q=1001+S+Main+St+Kalispell+Montana+USA',
+      email: 'info@logisol.tech',
+    },
+    CA: {
+      phone: '(587) 324-7424',
+      phoneLink: 'tel:+15873247424',
+      address: 'Evanston, Calgary, Alberta, Canada',
+      addressLink: 'https://maps.google.com/?q=100+King+Street+West+Toronto+Ontario+Canada',
+      email: 'info@logisol.tech',
+    }
+  };
+
+  // Get current contact info based on country
+  const getContactInfo = () => contactInfo[country] || contactInfo.US;
+
   const fetchExchangeRates = async () => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_EXCHANGE_RATE;
@@ -126,7 +147,9 @@ export const CountryProvider = ({ children }) => {
     changeCountry,
     convertPrice,
     getCurrency,
+    getContactInfo,
     currencies,
+    contactInfo,
     exchangeRates,
     isLoading
   };

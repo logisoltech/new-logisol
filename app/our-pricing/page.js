@@ -8,9 +8,18 @@ import Slider from '../Components/UI/Slider';
 import { headingFont } from '../Components/Font/headingFont';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
+import { useCountry } from '../context/CountryContext';
 
 const Page = () => {
   const pricingRef = useRef(null);
+  const { convertPrice, getCurrency } = useCountry();
+  const currency = getCurrency();
+
+  // Format price with currency symbol
+  const formatPrice = (usdPrice) => {
+    const converted = convertPrice(usdPrice);
+    return `${currency.symbol}${converted.toLocaleString()}`;
+  };
 
   return (
     <main className="text-white relative">
@@ -66,7 +75,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$499</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(499)}</span>
                 </div>
 
                 {/* Button */}
@@ -132,7 +141,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$999</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(999)}</span>
                 </div>
 
                 {/* Button */}
@@ -193,7 +202,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$1,999</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(1999)}</span>
                 </div>
 
                 {/* Button */}
@@ -267,7 +276,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$2,499</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(2499)}</span>
                 </div>
 
                 {/* Button */}
@@ -331,7 +340,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$5,999</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(5999)}</span>
                 </div>
 
                 {/* Button */}
@@ -390,7 +399,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$12,000</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(12000)}</span>
                 </div>
 
                 {/* Button */}
@@ -464,7 +473,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6 text-center">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$399</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(399)}</span>
                   <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
                 </div>
 
@@ -529,7 +538,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6 text-center">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$799</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(799)}</span>
                   <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
                 </div>
 
@@ -588,7 +597,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6 text-center">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$1,499</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(1499)}</span>
                   <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
                 </div>
 
@@ -663,7 +672,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6 text-center">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$299</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(299)}</span>
                   <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
                 </div>
 
@@ -724,7 +733,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6 text-center">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$599</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(599)}</span>
                   <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
                 </div>
 
@@ -779,7 +788,7 @@ const Page = () => {
 
                 {/* Price */}
                 <div className="mb-6 text-center">
-                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">$1,299</span>
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(1299)}</span>
                   <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
                 </div>
 

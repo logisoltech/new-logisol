@@ -3,11 +3,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { headingFont } from '../Font/headingFont';
+import { useCountry } from '@/app/context/CountryContext';
 
 const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
   const pricingSectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState(defaultTab);
+  const { convertPrice, getCurrency } = useCountry();
+  const currency = getCurrency();
+
+  // Format price with currency symbol
+  const formatPrice = (usdPrice) => {
+    const converted = convertPrice(usdPrice);
+    return `${currency.symbol}${converted.toLocaleString()}`;
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,7 +59,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'starter-site',
         title: 'Starter Site',
         description: 'Perfect for small businesses looking to establish an online presence.',
-        price: '$499',
+        price: 499,
         isPopular: false,
         features: [
           'Up to 5 Informational Pages',
@@ -65,7 +74,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'business-pro',
         title: 'Business Pro',
         description: 'Ideal for small to mid-sized e-commerce businesses.',
-        price: '$999',
+        price: 999,
         isPopular: true,
         features: [
           'Up to 12 Pages + Product Catalog',
@@ -80,7 +89,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'custom-development',
         title: 'Custom Development',
         description: 'For mid-to-large businesses needing fully customized web apps.',
-        price: '$1,999',
+        price: 1999,
         isPopular: false,
         features: [
           'Custom CMS / Admin Panel',
@@ -96,7 +105,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'mvp-package',
         title: 'MVP Package',
         description: 'Single platform app for small businesses or MVPs.',
-        price: '$2,499',
+        price: 2499,
         isPopular: false,
         features: [
           'Up to 5 Screens',
@@ -110,7 +119,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'cross-platform',
         title: 'Cross-Platform App',
         description: 'Cross-platform mobile solution for growing brands.',
-        price: '$5,999',
+        price: 5999,
         isPopular: true,
         features: [
           'Up to 15 Screens',
@@ -124,7 +133,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'enterprise-app',
         title: 'Enterprise App',
         description: 'Fully scalable app tailored to your business logic.',
-        price: '$12,000',
+        price: 12000,
         isPopular: false,
         features: [
           'Unlimited Screens (Per Scope)',
@@ -140,7 +149,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'starter-seo',
         title: 'Starter SEO',
         description: 'For businesses starting with local or basic organic visibility.',
-        price: '$399',
+        price: 399,
         priceUnit: '/month',
         isPopular: false,
         features: [
@@ -155,7 +164,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'basic-growth-seo',
         title: 'Basic Growth SEO',
         description: 'More keywords, better content, deeper analysis.',
-        price: '$799',
+        price: 799,
         priceUnit: '/month',
         isPopular: true,
         features: [
@@ -170,7 +179,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'enterprise-seo',
         title: 'Enterprise SEO',
         description: 'Advanced SEO strategy for national reach & long-term growth.',
-        price: '$1,499',
+        price: 1499,
         priceUnit: '/month',
         isPopular: false,
         features: [
@@ -187,7 +196,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'creative-starter',
         title: 'Creative Starter',
         description: 'Simple, clean designs and videos for startups.',
-        price: '$299',
+        price: 299,
         priceUnit: '/month',
         isPopular: false,
         features: [
@@ -201,7 +210,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'growth-creative',
         title: 'Growth Creative',
         description: 'A full content design service for active social or digital campaigns.',
-        price: '$599',
+        price: 599,
         priceUnit: '/month',
         isPopular: true,
         features: [
@@ -215,7 +224,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         id: 'pro-visual-suite',
         title: 'Pro Visual Suite',
         description: 'A full design & video editing partner for content-heavy operations.',
-        price: '$1,299',
+        price: 1299,
         priceUnit: '/month',
         isPopular: false,
         features: [
@@ -320,7 +329,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
                 {/* Price */}
                 <div className="mb-6">
                   <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">
-                    {plan.price}
+                    {formatPrice(plan.price)}
                   </span>
                   {plan.priceUnit && (
                     <span className="text-white/70 text-sm lg:text-base ml-2">
