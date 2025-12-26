@@ -183,6 +183,27 @@ const Footer = () => {
             </ul>
           </div>
         </div>
+
+        {/* Trust Badges Section */}
+        <div className="mt-8 lg:mt-12 pt-8 lg:pt-12 border-t border-white/20">
+          <div className="flex items-center justify-center gap-6 lg:gap-8 flex-wrap">
+            <img 
+              src="/clutch.png" 
+              alt="Clutch" 
+              className="h-10 sm:h-12 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
+            <img 
+              src="/google_1.png" 
+              alt="Google" 
+              className="h-10 sm:h-12 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
+            <img 
+              src="/trust.png" 
+              alt="Trust" 
+              className="h-10 sm:h-12 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
+          </div>
+        </div>
       </div>
     </footer>
   );

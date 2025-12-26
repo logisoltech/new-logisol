@@ -269,16 +269,6 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
         isImage: true,
       },
       {
-        title: 'Meta DM',
-        image: '/meta-dm.png',
-        isImage: true,
-      },
-      {
-        title: 'Google Ads DM',
-        image: '/google-ads-dm.png',
-        isImage: true,
-      },
-      {
         title: 'Axcel Dental SMM',
         image: '/axcel-dental-smm.png',
         isImage: true,
@@ -286,6 +276,16 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
       {
         title: 'Airport Shuttle SMM',
         image: '/airport-shuttle-smm.png',
+        isImage: true,
+      },
+      {
+        title: 'Meta DM',
+        image: '/meta-dm.png',
+        isImage: true,
+      },
+      {
+        title: 'Google Ads DM',
+        image: '/google-ads-dm.png',
         isImage: true,
       },
     ],

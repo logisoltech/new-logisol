@@ -40,6 +40,25 @@ const Hero = () => {
             >
               Get Started
             </button>
+
+            {/* Trust Badges */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 flex-wrap">
+              <img 
+                src="/clutch.png" 
+                alt="Clutch" 
+                className="h-10 sm:h-12 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity"
+              />
+              <img 
+                src="/google_1.png" 
+                alt="Google" 
+                className="h-10 sm:h-12 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity"
+              />
+              <img 
+                src="/trust.png" 
+                alt="Trust" 
+                className="h-10 sm:h-12 lg:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity"
+              />
+            </div>
           </div>
 
           {/* RIGHT MODEL - Visible on all screens */}

@@ -159,7 +159,7 @@ const Page = () => {
 
       <ScrollableRobot heroRef={null} aboutRef={contentRef} gapRef={null} servicesRef={null} />
 
-      <div className="flex items-center justify-center h-[20rem] sm:h-[25rem] lg:h-[30rem] px-4">
+      <div className="flex flex-col items-center justify-center h-[20rem] sm:h-[25rem] lg:h-[30rem] px-4">
         <h1
           className={`${headingFont.className} font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-5xl text-center text-white w-full px-4 sm:px-6`}
           style={{
@@ -168,6 +168,25 @@ const Page = () => {
         >
           SOCIAL MEDIA <span className="text-cyan-400">MARKETING</span> SERVICES
         </h1>
+        
+        {/* Trust Badges */}
+        <div className="flex items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-8 flex-wrap">
+          <img 
+            src="/clutch.png" 
+            alt="Clutch" 
+            className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
+          />
+          <img 
+            src="/google_1.png" 
+            alt="Google" 
+            className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
+          />
+          <img 
+            src="/trust.png" 
+            alt="Trust" 
+            className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
+          />
+        </div>
       </div>
 
       <Slider />

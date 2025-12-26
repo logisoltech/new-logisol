@@ -80,7 +80,7 @@ const Page = () => {
       <ScrollableRobot heroRef={null} aboutRef={null} gapRef={null} servicesRef={null} />
 
       {/* Heading Section */}
-      <div className="flex items-center justify-center h-[30rem]">
+      <div className="flex flex-col items-center justify-center h-[30rem]">
         <h1
           className={`${headingFont.className} font-extrabold text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center text-white w-full`}
           style={{
@@ -89,6 +89,25 @@ const Page = () => {
         >
           CONTACT <span className="text-cyan-400">US</span>
         </h1>
+        
+        {/* Trust Badges */}
+        <div className="flex items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-8 flex-wrap">
+          <img 
+            src="/clutch.png" 
+            alt="Clutch" 
+            className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
+          />
+          <img 
+            src="/google_1.png" 
+            alt="Google" 
+            className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
+          />
+          <img 
+            src="/trust.png" 
+            alt="Trust" 
+            className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
+          />
+        </div>
       </div>
 
       {/* Slider Section */}
