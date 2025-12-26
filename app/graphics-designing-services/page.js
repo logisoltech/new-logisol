@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import Navbar from '../Components/UI/Navbar';
+import ScrollableRobot from '../Components/UI/ScrollableRobot';
 import Slider from '../Components/UI/Slider';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
