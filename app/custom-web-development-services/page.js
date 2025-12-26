@@ -196,9 +196,9 @@ const Page = () => {
 
       <ScrollableRobot heroRef={null} aboutRef={contentRef} gapRef={null} servicesRef={null} />
 
-      <div className="flex items-center justify-center h-[30rem]">
+      <div className="flex items-center justify-center h-[20rem] sm:h-[25rem] lg:h-[30rem] px-4">
         <h1
-          className={`${headingFont.className} font-extrabold text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center text-white w-full`}
+          className={`${headingFont.className} font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-white w-full`}
           style={{
             textShadow: '0 0 40px rgba(255, 255, 255, 0.3), 0 0 80px rgba(255, 255, 255, 0.2)',
           }}
@@ -209,12 +209,12 @@ const Page = () => {
 
       <Slider />
 
-      <section ref={contentRef} className="relative w-full h-screen">
-        <div className="absolute inset-0 w-full h-full flex items-center py-16 lg:py-24">
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-16">
+      <section ref={contentRef} className="relative w-full min-h-screen py-8 lg:py-0 lg:h-screen">
+        <div className="absolute inset-0 w-full h-full flex items-center py-8 sm:py-12 lg:py-16 xl:py-24">
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12 xl:gap-16">
               {/* Text Content - Left Side */}
-              <div ref={leftAreaRef} className="flex items-start gap-6 lg:gap-8 flex-1 lg:w-1/2">
+              <div ref={leftAreaRef} className="flex items-start gap-4 sm:gap-6 lg:gap-8 flex-1 lg:w-1/2 w-full">
                 {/* Vertical Scroll Progress Bar */}
                 <div className="hidden lg:flex flex-col items-center gap-1 py-2">
                   {/* Progress Track */}
@@ -249,9 +249,9 @@ const Page = () => {
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 flex-1">
+                <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 sm:space-y-8 flex-1 w-full">
                   {/* Paragraph Container */}
-                  <div className="relative w-full max-w-2xl min-h-[260px]">
+                  <div className="relative w-full max-w-2xl min-h-[200px] sm:min-h-[240px] lg:min-h-[260px]">
                     {paragraphs.map((para, index) => (
                       <div
                         key={index}
@@ -261,10 +261,10 @@ const Page = () => {
                             : 'opacity-0 translate-y-8 pointer-events-none'
                         }`}
                       >
-                        <h2 className={`${headingFont.className} font-bold text-2xl md:text-3xl text-white mb-4`}>
+                        <h2 className={`${headingFont.className} font-bold text-xl sm:text-2xl md:text-3xl text-white mb-3 sm:mb-4`}>
                           {para.heading}
                         </h2>
-                        <p className="text-white/90 text-lg md:text-xl leading-relaxed">
+                        <p className="text-white/90 text-base sm:text-lg md:text-xl leading-relaxed">
                           {para.text}
                         </p>
                       </div>
@@ -285,8 +285,8 @@ const Page = () => {
                 </div>
               </div>
 
-              {/* 3D Model Container - Right Side */}
-              <div ref={rightAreaRef} className="relative w-full lg:w-1/2">
+              {/* 3D Model Container - Right Side - Desktop Only */}
+              <div ref={rightAreaRef} className="hidden lg:block relative w-full lg:w-1/2">
                 <div
                   id="custom-web-model-container"
                   className="relative w-full aspect-square max-w-md mx-auto flex items-center justify-center overflow-visible pointer-events-none"

@@ -248,8 +248,8 @@ export const StaggeredMenu = ({
             </svg>
           </button>
 
-          {/* Search Bar - Mobile */}
-          <div className="p-6 pb-0">
+          {/* Search Bar - Mobile Only */}
+          <div className="p-6 pb-0 lg:hidden">
             <div className="relative">
               <svg
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50"
@@ -268,7 +268,7 @@ export const StaggeredMenu = ({
               />
             </div>
             
-            {/* Search Results */}
+            {/* Search Results - Mobile Only */}
             {searchResults.length > 0 && (
               <div className="mt-2 max-h-48 overflow-y-auto rounded-xl bg-black/40 border border-white/10">
                 {searchResults.map((result, index) => (
@@ -288,21 +288,18 @@ export const StaggeredMenu = ({
               </div>
             )}
 
-            {/* Country Selector - Mobile */}
-            <div className="mt-4 flex items-center gap-2">
-              <span className="text-white/50 text-sm">Region:</span>
-              <CountrySelector />
-            </div>
+            
           </div>
 
           <div className="flex-1 overflow-y-auto p-6 min-h-0" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <ul className="list-none m-0 p-0 flex flex-col gap-3 w-full">
+            <div className="flex items-center justify-center min-h-full">
+              <ul className="list-none m-0 p-0 flex flex-col gap-3 w-full">
               {items && items.length > 0 ? (
                 items.map((item, idx) => (
                   <li key={idx}>
                     <a
                       href={item.link || item.href}
-                      className="text-white font-semibold text-2xl uppercase no-underline block hover:text-cyan-400 transition-colors"
+                      className="text-white font-semibold text-lg lg:text-2xl uppercase no-underline block hover:text-cyan-400 transition-colors"
                       onClick={() => {
                         closeMenu();
                         animateHamburger(false);
@@ -317,7 +314,7 @@ export const StaggeredMenu = ({
                           <li key={sIdx}>
                             <a
                               href={service.link || service.href}
-                              className="text-md font-bold text-white hover:text-cyan-400 transition-colors block"
+                              className="text-sm lg:text-md font-bold text-white hover:text-cyan-400 transition-colors block"
                               onClick={() => {
                                 closeMenu();
                                 animateHamburger(false);
@@ -332,7 +329,7 @@ export const StaggeredMenu = ({
                                   <li key={subIdx}>
                                     <a
                                       href={subItem.href}
-                                      className="text-sm text-white/80 hover:text-cyan-400 transition-colors block"
+                                      className="text-xs lg:text-sm text-white/80 hover:text-cyan-400 transition-colors block"
                                       onClick={() => {
                                         closeMenu();
                                         animateHamburger(false);
@@ -355,7 +352,8 @@ export const StaggeredMenu = ({
                   <span className="text-white text-lg">No items</span>
                 </li>
               )}
-            </ul>
+              </ul>
+            </div>
           </div>
         </aside>,
         document.body

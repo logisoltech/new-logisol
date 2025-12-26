@@ -195,7 +195,7 @@ const Navbar = () => {
               <CountrySelector />
             </div>
 
-            {/* StaggeredMenu - Pass search props for mobile */}
+            {/* StaggeredMenu */}
             <div className="relative z-50">
               <StaggeredMenu 
                 items={menuItems} 

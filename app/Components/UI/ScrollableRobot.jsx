@@ -31,9 +31,11 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Check if mobile
   useEffect(() => {
+    setIsMounted(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -360,6 +362,14 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
   }, [heroRef, aboutRef, gapRef, servicesRef]);
 
   const modelSize = isMobile ? '280px' : '500px';
+
+  // Hide model on mobile only if NOT on landing page (landing page has heroRef)
+  // Landing page = show model on mobile, Other pages = hide model on mobile
+  // On sub-services pages, heroRef is passed as null
+  const isLandingPage = heroRef !== null;
+  if (isMounted && isMobile && !isLandingPage) {
+    return null;
+  }
 
   return (
     <div
