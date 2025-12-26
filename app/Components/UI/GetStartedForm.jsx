@@ -121,10 +121,10 @@ const GetStartedForm = () => {
   };
 
   return (
-    <div className="w-full" style={{ pointerEvents: 'auto' }}>
+    <div className="w-full px-4 md:px-0" style={{ pointerEvents: 'auto' }}>
       <form
         onSubmit={handleSubmit}
-        className="backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full px-6 py-4 flex flex-col md:flex-row items-center gap-4 w-full"
+        className="backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-2xl md:rounded-full px-4 md:px-6 py-6 md:py-4 flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full"
       >
         {/* Name Field */}
         <div className="flex-1 w-full md:w-auto">
@@ -134,7 +134,7 @@ const GetStartedForm = () => {
             placeholder="Name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+            className="w-full h-12 rounded-lg md:rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
             required
           />
         </div>
@@ -147,7 +147,7 @@ const GetStartedForm = () => {
             placeholder="Email"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+            className="w-full h-12 rounded-lg md:rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
             required
           />
         </div>
@@ -160,7 +160,7 @@ const GetStartedForm = () => {
             placeholder="Phone Number"
             value={formData.phone}
             onChange={handleInputChange}
-            className="w-full h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+            className="w-full h-12 rounded-lg md:rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
             required
           />
         </div>
@@ -174,7 +174,7 @@ const GetStartedForm = () => {
             value={formData.scheduleDate ? formatDate(formData.scheduleDate) : ''}
             readOnly
             onClick={() => setShowCalendar(!showCalendar)}
-            className="w-full h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
+            className="w-full h-12 rounded-lg md:rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all cursor-pointer"
           />
           {showCalendar && isMounted && createPortal(
             <div ref={calendarContainerRef} style={{ zIndex: 10002, pointerEvents: 'auto' }}>
@@ -192,7 +192,7 @@ const GetStartedForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`font-semibold px-8 py-3 rounded-full transition-all whitespace-nowrap w-full md:w-auto flex items-center justify-center gap-2 ${
+          className={`font-semibold px-8 py-3 rounded-lg md:rounded-full transition-all whitespace-nowrap w-full md:w-auto flex items-center justify-center gap-2 ${
             isSubmitting
               ? 'bg-gray-500 cursor-not-allowed text-white'
               : submitStatus === 'success'

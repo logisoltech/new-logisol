@@ -2,12 +2,18 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import Link from 'next/link';
 import { gsap } from 'gsap';
 import { getLenis } from './SmoothScroll';
+import CountrySelector from './CountrySelector';
 
 export const StaggeredMenu = ({
   items = [],
   position = 'right',
+  searchQuery = '',
+  onSearchChange = () => {},
+  searchResults = [],
+  onResultClick = () => {},
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -241,6 +247,53 @@ export const StaggeredMenu = ({
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
+
+          {/* Search Bar - Mobile */}
+          <div className="p-6 pb-0">
+            <div className="relative">
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="w-full h-10 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm pl-10 pr-4 py-2 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+              />
+            </div>
+            
+            {/* Search Results */}
+            {searchResults.length > 0 && (
+              <div className="mt-2 max-h-48 overflow-y-auto rounded-xl bg-black/40 border border-white/10">
+                {searchResults.map((result, index) => (
+                  <Link
+                    key={index}
+                    href={result.link}
+                    onClick={() => {
+                      onResultClick();
+                      closeMenu();
+                      animateHamburger(false);
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors border-b border-white/5 last:border-b-0"
+                  >
+                    <div className="text-white text-sm">{result.title}</div>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Country Selector - Mobile */}
+            <div className="mt-4 flex items-center gap-2">
+              <span className="text-white/50 text-sm">Region:</span>
+              <CountrySelector />
+            </div>
+          </div>
 
           <div className="flex-1 flex items-center overflow-y-auto p-6">
             <ul className="list-none m-0 p-0 flex flex-col gap-3 w-full">

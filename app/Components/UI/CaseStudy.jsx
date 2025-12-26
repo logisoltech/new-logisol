@@ -7,6 +7,18 @@ const CaseStudy = () => {
   const caseStudySectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [expandedCard, setExpandedCard] = useState(null); // For mobile tap-to-expand
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -112,9 +124,9 @@ const CaseStudy = () => {
           </h2>
         </div>
 
-        {/* Cards Grid - Flex layout so cards shrink instead of wrapping */}
+        {/* Cards Grid - Responsive layout */}
         <div 
-          className={`flex gap-4 lg:gap-6 w-full transition-all duration-1000 ease-out ${
+          className={`flex flex-col md:flex-row gap-4 lg:gap-6 w-full transition-all duration-1000 ease-out ${
             isVisible
               ? 'translate-y-0 opacity-100'
               : 'translate-y-[50px] opacity-0'
@@ -123,106 +135,130 @@ const CaseStudy = () => {
             transitionDelay: '200ms',
           }}
         >
-          {caseStudies.map((study) => (
-            <div
-              key={study.id}
-              onMouseEnter={() => setHoveredCard(study.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-              className={`backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden cursor-pointer relative h-[400px] ${
-                hoveredCard === study.id
-                  ? 'flex-[2] shadow-2xl border-cyan-400/30'
-                  : hoveredCard
-                    ? 'flex-[0.5]'
-                    : 'flex-1'
-              }`}
-              style={{
-                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                transformOrigin: 'center',
-                minWidth: hoveredCard === study.id ? '50%' : hoveredCard ? '10%' : '20%',
-              }}
-            >
-              {hoveredCard === study.id ? (
-                /* Expanded State - Full case study content */
-                <div 
-                  className="h-full flex"
-                  style={{
-                    animation: 'slideIn 0.4s ease-out',
-                  }}
-                >
-                  {/* Left Side - Content */}
-                  <div className="flex-[3] flex flex-col min-w-0 overflow-hidden">
-                    <div className={`bg-gradient-to-br ${study.color} p-4 lg:p-6 flex-1 flex flex-col justify-start overflow-y-auto`}>
-                      {/* Header */}
-                      <div className="mb-3">
-                        <h3 className="font-bold text-lg lg:text-xl text-white">
-                          {study.title}
-                        </h3>
-                      </div>
-                      <h4 className="font-semibold text-sm lg:text-base mb-3 text-white/90">
-                        {study.heading}
-                      </h4>
-                      
-                      {/* Description */}
-                      <p className="text-xs leading-relaxed mb-4 text-white/80">
-                        {study.description}
-                      </p>
-                      
-                      {/* Requirements, Challenge, Solution */}
-                      <div className="space-y-2 mt-auto">
-                        <div className="rounded-lg p-2 bg-white/10">
-                          <span className="text-xs font-semibold text-white">⚡ Challenge: </span>
-                          <span className="text-xs text-white/80">{study.challenge}</span>
+          {caseStudies.map((study) => {
+            const isExpanded = isMobile ? expandedCard === study.id : hoveredCard === study.id;
+            const hasOtherExpanded = isMobile ? expandedCard && expandedCard !== study.id : hoveredCard && hoveredCard !== study.id;
+            
+            return (
+              <div
+                key={study.id}
+                onMouseEnter={() => !isMobile && setHoveredCard(study.id)}
+                onMouseLeave={() => !isMobile && setHoveredCard(null)}
+                onClick={() => isMobile && setExpandedCard(expandedCard === study.id ? null : study.id)}
+                className={`backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden cursor-pointer relative ${
+                  isExpanded
+                    ? 'md:flex-[2] shadow-2xl border-cyan-400/30'
+                    : hasOtherExpanded
+                      ? 'md:flex-[0.5]'
+                      : 'md:flex-1'
+                }`}
+                style={{
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transformOrigin: 'center',
+                  minWidth: isMobile ? 'auto' : isExpanded ? '50%' : hasOtherExpanded ? '10%' : '20%',
+                  height: isMobile ? (isExpanded ? 'auto' : '200px') : '400px',
+                  minHeight: isMobile && isExpanded ? '450px' : undefined,
+                }}
+              >
+                {isExpanded ? (
+                  /* Expanded State - Full case study content */
+                  <div 
+                    className="h-full flex flex-col md:flex-row"
+                    style={{
+                      animation: 'slideIn 0.4s ease-out',
+                    }}
+                  >
+                    {/* Left Side - Content */}
+                    <div className="flex-[3] flex flex-col min-w-0 overflow-hidden">
+                      <div className={`bg-gradient-to-br ${study.color} p-4 lg:p-6 flex-1 flex flex-col justify-start overflow-y-auto`}>
+                        {/* Header */}
+                        <div className="mb-3 flex items-center justify-between">
+                          <h3 className="font-bold text-lg lg:text-xl text-white">
+                            {study.title}
+                          </h3>
+                          {isMobile && (
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); setExpandedCard(null); }}
+                              className="text-white/70 hover:text-white p-1"
+                            >
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          )}
                         </div>
-                        <div className="rounded-lg p-2 bg-white/10">
-                          <span className="text-xs font-semibold text-white">✅ Solution: </span>
-                          <span className="text-xs text-white/80">{study.solution}</span>
+                        <h4 className="font-semibold text-sm lg:text-base mb-3 text-white/90">
+                          {study.heading}
+                        </h4>
+                        
+                        {/* Description */}
+                        <p className="text-xs leading-relaxed mb-4 text-white/80">
+                          {study.description}
+                        </p>
+                        
+                        {/* Requirements, Challenge, Solution */}
+                        <div className="space-y-2 mt-auto">
+                          <div className="rounded-lg p-2 bg-white/10">
+                            <span className="text-xs font-semibold text-white">⚡ Challenge: </span>
+                            <span className="text-xs text-white/80">{study.challenge}</span>
+                          </div>
+                          <div className="rounded-lg p-2 bg-white/10">
+                            <span className="text-xs font-semibold text-white">✅ Solution: </span>
+                            <span className="text-xs text-white/80">{study.solution}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    {/* Right Side - Image Display (Hover Image) */}
+                    <div className="hidden md:block flex-1 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 max-w-[180px]">
+                      <img 
+                        src={study.hoverImage} 
+                        alt={`${study.title} hover`}
+                        className="w-full h-full object-cover transition-all duration-500"
+                      />
+                    </div>
                   </div>
-                  {/* Right Side - Image Display (Hover Image) */}
-                  <div className="flex-1 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 max-w-[180px]">
-                    <img 
-                      src={study.hoverImage} 
-                      alt={`${study.title} hover`}
-                      className="w-full h-full object-cover transition-all duration-500"
-                    />
+                ) : (
+                  /* Compact State - Vertical text on left, image on right */
+                  <div 
+                    className="h-full flex"
+                    style={{
+                      animation: 'slideOut 0.3s ease-out',
+                    }}
+                  >
+                    {/* Vertical Title Sidebar - Horizontal on mobile compact */}
+                    <div className={`bg-gradient-to-b ${study.color} w-16 md:w-16 lg:w-20 flex items-center justify-center flex-shrink-0`}>
+                      <h3 
+                        className="font-extrabold text-sm md:text-base lg:text-lg text-white tracking-wide"
+                        style={{
+                          writingMode: 'vertical-rl',
+                          textOrientation: 'mixed',
+                          transform: 'rotate(180deg)',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {study.title}
+                      </h3>
+                    </div>
+                    {/* Image Display - Default Image */}
+                    <div className="flex-1 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+                      <img 
+                        src={study.image} 
+                        alt={study.title}
+                        className="w-full h-full object-cover transition-all duration-500"
+                      />
+                      {/* Mobile tap hint */}
+                      {isMobile && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <span className="text-white/80 text-xs font-medium">Tap to expand</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                /* Compact State - Vertical text on left, image on right */
-                <div 
-                  className="h-full flex"
-                  style={{
-                    animation: 'slideOut 0.3s ease-out',
-                  }}
-                >
-                  {/* Vertical Title Sidebar */}
-                  <div className={`bg-gradient-to-b ${study.color} w-16 lg:w-20 flex items-center justify-center flex-shrink-0`}>
-                    <h3 
-                      className="font-extrabold text-base lg:text-lg text-white tracking-wide"
-                      style={{
-                        writingMode: 'vertical-rl',
-                        textOrientation: 'mixed',
-                        transform: 'rotate(180deg)',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {study.title}
-                    </h3>
-                  </div>
-                  {/* Image Display - Default Image */}
-                  <div className="flex-1 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                    <img 
-                      src={study.image} 
-                      alt={study.title}
-                      className="w-full h-full object-cover transition-all duration-500"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
       <style jsx global>{`

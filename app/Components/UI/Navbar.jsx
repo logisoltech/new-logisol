@@ -60,7 +60,6 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef(null);
-  const mobileSearchRef = useRef(null);
 
   // Handle search
   const handleSearch = (query) => {
@@ -85,8 +84,7 @@ const Navbar = () => {
   // Close search results when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target) &&
-          mobileSearchRef.current && !mobileSearchRef.current.contains(event.target)) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
         setIsSearchFocused(false);
       }
     };
@@ -107,20 +105,20 @@ const Navbar = () => {
       className={`${font.className} sticky top-0 z-[9999]`}
     >
       {/* Glassy Material Navbar Container */}
-      <div className="w-[80%] mx-auto mt-6 backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full relative z-[99999]">
-        <div className="w-full mx-auto px-6 py-4 flex items-center justify-between relative">
+      <div className="w-[95%] lg:w-[80%] mx-auto mt-4 lg:mt-6 backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full relative z-[99999]">
+        <div className="w-full mx-auto px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between relative">
           {/* Logo */}
           <a href="/" className="flex-shrink-0 z-50 relative">
             <img
               src="/logo.png"
               alt="Logisol Logo"
-              className="w-auto h-10"
+              className="w-auto h-8 lg:h-10"
             />
           </a>
 
           {/* Right side - Search, Country Selector and Menu */}
-          <div className="flex items-center gap-4 ml-auto">
-            {/* Search Bar - Desktop */}
+          <div className="flex items-center gap-2 lg:gap-4 ml-auto">
+            {/* Search Bar - Desktop Only */}
             <div className="hidden lg:block relative z-[99999]" ref={searchRef}>
               <div className="relative">
                 <svg
@@ -192,60 +190,22 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Country Selector */}
+            {/* Country Selector - Desktop Only */}
             <div className="hidden lg:block">
               <CountrySelector />
             </div>
 
-            {/* StaggeredMenu */}
+            {/* StaggeredMenu - Pass search props for mobile */}
             <div className="relative z-50">
-              <StaggeredMenu items={menuItems} position="right" />
-            </div>
-          </div>
-
-          {/* Mobile Search Bar */}
-          <div className="lg:hidden flex-1 max-w-xs mx-4 relative z-[99999]" ref={mobileSearchRef}>
-            <div className="relative">
-              <svg
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                onFocus={() => setIsSearchFocused(true)}
-                className="w-full h-9 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm pl-9 pr-3 py-1.5 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:border-cyan-400/50 transition-all"
+              <StaggeredMenu 
+                items={menuItems} 
+                position="right"
+                searchQuery={searchQuery}
+                onSearchChange={handleSearch}
+                searchResults={searchResults}
+                onResultClick={handleResultClick}
               />
             </div>
-
-            {/* Search Results Dropdown - Mobile */}
-            {isSearchFocused && searchResults.length > 0 && (
-              <div className="absolute top-full mt-2 left-0 right-0 max-h-80 overflow-y-auto backdrop-blur-2xl bg-black/90 border border-white/20 rounded-xl shadow-2xl z-[99999]">
-                {searchResults.map((result, index) => (
-                  <Link
-                    key={index}
-                    href={result.link}
-                    onClick={handleResultClick}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors border-b border-white/5 last:border-b-0"
-                  >
-                    <div className="text-white text-sm">{result.title}</div>
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            {/* No results - Mobile */}
-            {isSearchFocused && searchQuery.trim() !== '' && searchResults.length === 0 && (
-              <div className="absolute top-full mt-2 left-0 right-0 backdrop-blur-2xl bg-black/90 border border-white/20 rounded-xl shadow-2xl z-[99999] p-3">
-                <div className="text-white/50 text-xs text-center">No results found</div>
-              </div>
-            )}
           </div>
         </div>
       </div>
