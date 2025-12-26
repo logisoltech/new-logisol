@@ -1,11 +1,16 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { headingFont } from '../Font/headingFont';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Portfolio = ({ defaultTab = 'Web Development' }) => {
   const portfolioSectionRef = useRef(null);
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef(null); // viewport
+  const trackRef = useRef(null); // the flex row that moves
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState(defaultTab);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -39,42 +44,134 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
     };
   }, []);
 
-  // Check scroll position to enable/disable buttons
+  // Check scroll position to enable/disable buttons (for ScrollTrigger)
   const checkScrollPosition = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    const trigger = ScrollTrigger.getById('portfolioHorizontal');
+    if (trigger && trackRef.current && scrollContainerRef.current) {
+      const track = trackRef.current;
+      const viewport = scrollContainerRef.current;
+      const scrollDistance = track.scrollWidth - viewport.clientWidth;
+      const progress = trigger.progress;
+      
+      setCanScrollLeft(progress > 0.01);
+      setCanScrollRight(progress < 0.99);
+    } else if (trackRef.current && scrollContainerRef.current) {
+      // Fallback when ScrollTrigger not active
+      const track = trackRef.current;
+      const viewport = scrollContainerRef.current;
+      const currentX = gsap.getProperty(track, 'x') || 0;
+      const scrollDistance = track.scrollWidth - viewport.clientWidth;
+      
+      setCanScrollLeft(currentX < 0);
+      setCanScrollRight(Math.abs(currentX) < scrollDistance - 10);
     }
   };
 
-  // Scroll handlers
+  // Scroll handlers - scroll page to move track with ScrollTrigger
   const handleScrollLeft = () => {
-    if (scrollContainerRef.current) {
-      // Get the first card element and its width
-      const cards = scrollContainerRef.current.querySelectorAll('.portfolio-card');
-      const cardWidth = cards[0]?.offsetWidth || 400;
-      const gap = 32; // gap-8 = 32px
-      scrollContainerRef.current.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+    const trigger = ScrollTrigger.getById('portfolioHorizontal');
+    if (trigger) {
+      const currentProgress = trigger.progress;
+      const cards = trackRef.current?.querySelectorAll('.portfolio-card');
+      const cardWidth = cards?.[0]?.offsetWidth || 400;
+      const gap = 32;
+      const scrollAmount = cardWidth + gap;
+      const viewport = scrollContainerRef.current;
+      const scrollDistance = trackRef.current ? trackRef.current.scrollWidth - viewport.clientWidth : 0;
+      
+      if (scrollDistance > 0) {
+        const progressChange = scrollAmount / scrollDistance;
+        const newProgress = Math.max(0, currentProgress - progressChange);
+        const start = trigger.start;
+        const end = trigger.end;
+        const targetScroll = start + (end - start) * newProgress;
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      }
     }
   };
 
   const handleScrollRight = () => {
-    if (scrollContainerRef.current) {
-      // Get the first card element and its width
-      const cards = scrollContainerRef.current.querySelectorAll('.portfolio-card');
-      const cardWidth = cards[0]?.offsetWidth || 400;
-      const gap = 32; // gap-8 = 32px
-      scrollContainerRef.current.scrollBy({ left: cardWidth + gap, behavior: 'smooth' });
+    const trigger = ScrollTrigger.getById('portfolioHorizontal');
+    if (trigger) {
+      const currentProgress = trigger.progress;
+      const cards = trackRef.current?.querySelectorAll('.portfolio-card');
+      const cardWidth = cards?.[0]?.offsetWidth || 400;
+      const gap = 32;
+      const scrollAmount = cardWidth + gap;
+      const viewport = scrollContainerRef.current;
+      const scrollDistance = trackRef.current ? trackRef.current.scrollWidth - viewport.clientWidth : 0;
+      
+      if (scrollDistance > 0) {
+        const progressChange = scrollAmount / scrollDistance;
+        const newProgress = Math.min(1, currentProgress + progressChange);
+        const start = trigger.start;
+        const end = trigger.end;
+        const targetScroll = start + (end - start) * newProgress;
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      }
     }
   };
 
   // Reset scroll position when tab changes
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-      setTimeout(checkScrollPosition, 100);
+    if (trackRef.current) {
+      gsap.set(trackRef.current, { x: 0 });
+      ScrollTrigger.refresh();
+      setTimeout(checkScrollPosition, 200);
     }
+  }, [activeTab]);
+
+  // GSAP ScrollTrigger pin + scrub for horizontal scroll
+  useEffect(() => {
+    const section = portfolioSectionRef.current;
+    const viewport = scrollContainerRef.current;
+    const track = trackRef.current;
+
+    if (!section || !viewport || !track) return;
+
+    const create = () => {
+      // distance we need to move horizontally
+      const scrollDistance = track.scrollWidth - viewport.clientWidth;
+
+      // nothing to animate if it fits
+      if (scrollDistance <= 0) return;
+
+      // kill previous triggers on refresh/tab change
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.vars?.id === 'portfolioHorizontal') t.kill();
+      });
+
+      gsap.set(track, { x: 0, willChange: 'transform' });
+
+      gsap.to(track, {
+        x: -scrollDistance,
+        ease: 'none',
+        scrollTrigger: {
+          id: 'portfolioHorizontal',
+          trigger: track,  // Trigger on the track (cards row) itself
+          start: 'top 40%',  // Start when track top reaches 55% down viewport (just a bit lower than center)
+          end: `+=${scrollDistance}`,   // scroll length matches horizontal distance
+          pin: section,  // Pin the entire section
+          scrub: 1,                    // "glide" but tied to scroll, no runaway inertia
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: () => {
+            checkScrollPosition();
+          },
+        },
+      });
+    };
+
+    create();
+    ScrollTrigger.addEventListener('refreshInit', create);
+    ScrollTrigger.refresh();
+
+    return () => {
+      ScrollTrigger.removeEventListener('refreshInit', create);
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.vars?.id === 'portfolioHorizontal') t.kill();
+      });
+    };
   }, [activeTab]);
 
   const tabs = [
@@ -235,10 +332,10 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
       ref={portfolioSectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden py-32"
     >
-      {/* Hide scrollbar CSS */}
+      {/* CSS for ScrollTrigger */}
       <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
+        .portfolio-scroll-container {
+          overscroll-behavior: contain;
         }
       `}</style>
 
@@ -314,18 +411,13 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
         {/* Content Grid - Horizontal Scrollable Carousel */}
         <div
           ref={scrollContainerRef}
-          onScroll={checkScrollPosition}
-          className={`overflow-x-auto overflow-y-visible pb-4 transition-all duration-500 ease-out -mx-6 lg:-mx-8 scrollbar-hide ${
+          className={`portfolio-scroll-container overflow-hidden pb-4 transition-all duration-500 ease-out -mx-6 lg:-mx-8 ${
             isVisible
               ? 'translate-y-0 opacity-100'
               : 'translate-y-[50px] opacity-0'
           }`}
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
         >
-          <div className="flex gap-6 lg:gap-8 pl-6 lg:pl-12 pr-6 lg:pr-8">
+          <div ref={trackRef} className="flex gap-6 lg:gap-8 pl-6 lg:pl-12 pr-6 lg:pr-8">
           {currentContent.map((item, index) => (
             <div
               key={index}
@@ -340,7 +432,7 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
                   <img 
                     src={item.image} 
                     alt={item.title}
-                    className="w-full h-[200%] object-cover object-top transition-transform duration-700 ease-out group-hover:translate-y-[-50%]"
+                    className="w-full h-full object-cover object-top"
                     loading="lazy"
                   />
                 ) : (
