@@ -295,7 +295,7 @@ export const StaggeredMenu = ({
             </div>
           </div>
 
-          <div className="flex-1 flex items-center overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-6 min-h-0" style={{ WebkitOverflowScrolling: 'touch' }}>
             <ul className="list-none m-0 p-0 flex flex-col gap-3 w-full">
               {items && items.length > 0 ? (
                 items.map((item, idx) => (

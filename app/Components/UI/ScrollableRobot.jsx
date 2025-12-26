@@ -30,6 +30,17 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
   });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const updatePosition = () => {
@@ -117,6 +128,11 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
             : heroRect.left + heroRect.width * 0.5;
       }
 
+      // Y position for hero - on mobile push model down with offset
+      const heroY = windowWidth < 1024 
+        ? heroRect.top + heroRect.height * 0.38  // Push down on mobile (38% from top)
+        : heroRect.top + heroRect.height * 0.3;  // Original desktop position (30% from top)
+
       // X and Y positions for about side (viewport-relative, since we use position: fixed)
       let aboutY;
       if (aboutContainer) {
@@ -132,9 +148,6 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
             : aboutRect.left + aboutRect.width * 0.5;
         aboutY = aboutRect.top + aboutRect.height / 2;
       }
-
-      // Y position for hero (viewport-relative) - adjusted to be more centered with form at top
-      const heroY = heroRect.top + heroRect.height * 0.3;
 
       // Section boundaries
       const aboutSectionHeight = aboutRef.current.offsetHeight;
@@ -346,6 +359,8 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
     };
   }, [heroRef, aboutRef, gapRef, servicesRef]);
 
+  const modelSize = isMobile ? '280px' : '500px';
+
   return (
     <div
       ref={containerRef}
@@ -356,8 +371,8 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         transform: 'translate(-50%, -50%)',
         opacity: isVisible ? position.opacity : 0,
         pointerEvents: 'none',
-        width: '500px',
-        height: '500px',
+        width: modelSize,
+        height: modelSize,
         maxWidth: '100vw',
         maxHeight: '100vh',
         touchAction: 'none',
