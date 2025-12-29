@@ -454,16 +454,6 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
                 )}
               </div>
 
-              {/* Dark Overlay for text visibility */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/40 pointer-events-none" />
-
-              {/* Label - Top Left */}
-              <div className="absolute top-4 left-4 z-10">
-                <h3 className="text-white font-bold text-base lg:text-lg group-hover:text-cyan-400 transition-all duration-300">
-                  {item.title}
-                </h3>
-              </div>
-
               {/* Hover Effect Glow */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/0 to-cyan-400/0 group-hover:from-cyan-400/10 group-hover:to-cyan-400/5 transition-all duration-500 pointer-events-none" />
             </div>

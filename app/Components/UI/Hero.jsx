@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import { headingFont } from '../Font/headingFont';
 import GetStartedForm from './GetStartedForm';
+import Link from 'next/link';
 
 const Hero = () => {
   const formRef = useRef(null);
@@ -32,14 +33,12 @@ const Hero = () => {
               Expert Services and Solutions for Web & Mobile App Development
             </p>
 
-            <button
-              onClick={() =>
-                formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-              }
+            <Link
+              href="/contact-us"
               className="bg-cyan-400 mt-3 hover:bg-cyan-500 hover:text-white cursor-pointer text-black px-6 py-3 rounded-full transition-all"
             >
               Get Started
-            </button>
+            </Link>
 
             {/* Trust Badges */}
             <div className="flex items-center justify-center lg:justify-start gap-4 mt-6 flex-wrap">

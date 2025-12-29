@@ -12,6 +12,8 @@ import CaseStudy from './Components/UI/CaseStudy';
 import Pricing from './Components/UI/Pricing';
 import FAQ from './Components/UI/FAQ';
 import Footer from './Components/UI/Footer';
+import Testimonials from './Components/UI/Testimonials';
+import Blogs from './Components/UI/Blogs';
 
 export default function Home() {
   const heroRef = useRef(null);
@@ -48,8 +50,14 @@ export default function Home() {
         <Pricing />
       </section>
       <section className="relative">
-        <FAQ />
+        <Testimonials />
       </section>
+        <section className="relative">
+          <FAQ />
+        </section>
+        <section className="relative">
+          <Blogs />
+        </section>
       <Footer />
     </main>
   );
