@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Link from 'next/link';
 import Navbar from '../Components/UI/Navbar';
 import ScrollableRobot from '../Components/UI/ScrollableRobot';
 import Slider from '../Components/UI/Slider';
@@ -14,18 +15,21 @@ const Page = () => {
   const blogPosts = [
     {
       id: 1,
-      title: 'The Future of Web Development: Trends to Watch in 2024',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+      title: 'App Icon Design Best Practices',
+      image: '/app-icon-design.png',
+      slug: '/app-icon-design-blog',
     },
     {
       id: 2,
-      title: 'Mobile App Development: Best Practices for Success',
-      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop',
+      title: 'How to Publish an App on Play Store',
+      image: 'https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=800&h=600&fit=crop',
+      slug: '/publish-app-on-play-store',
     },
     {
       id: 3,
-      title: 'SEO Strategies That Drive Real Business Growth',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+      title: 'Best Instagram Management Tools',
+      image: 'https://images.unsplash.com/photo-1611262588024-d12430b98920?w=800&h=600&fit=crop',
+      slug: '/best-instagram-management-tools',
     },
   ];
 
@@ -74,9 +78,10 @@ const Page = () => {
         <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {blogPosts.map((blog) => (
-              <div
+              <Link
                 key={blog.id}
-                className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group"
+                href={blog.slug || '#'}
+                className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group relative"
               >
                 {/* Image */}
                 <div className="w-full h-48 lg:h-56 overflow-hidden bg-gradient-to-br from-cyan-400/20 to-purple-500/20">
@@ -99,7 +104,7 @@ const Page = () => {
 
                 {/* Hover Effect Glow */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/0 to-cyan-400/0 group-hover:from-cyan-400/10 group-hover:to-cyan-400/5 transition-all duration-500 pointer-events-none" />
-              </div>
+              </Link>
             ))}
           </div>
         </div>

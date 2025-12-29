@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CountryProvider } from "./context/CountryContext";
-import SmoothScroll from "./Components/UI/SmoothScroll";
+import Providers from "./Providers";
 import SilkBackgroundWrapper from "./Components/UI/SilkBackgroundWrapper";
 
 const geistSans = Geist({
@@ -28,9 +28,7 @@ export default function RootLayout({ children }) {
         {/* Silk Background - covers entire website */}
         <SilkBackgroundWrapper />
         <CountryProvider>
-          <SmoothScroll>
-            {children}
-          </SmoothScroll>
+          <Providers>{children}</Providers>
         </CountryProvider>
       </body>
     </html>
