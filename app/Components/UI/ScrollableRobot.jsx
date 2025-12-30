@@ -123,7 +123,7 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef, footerRef }) 
             const footerVisibility = Math.min(1, (windowHeight * 0.7 - footerRect.top) / (windowHeight * 0.3));
             const footerOpacity = clamp(footerVisibility, 0, 1);
             
-            setScrollProgress(0.5); // Looking right in footer
+            setScrollProgress(0); // Looking left in footer
             setIsVisible(true);
             setPosition({
               x: footerX,
@@ -420,7 +420,7 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef, footerRef }) 
           const footerVisibility = Math.min(1, (windowHeight - footerRect.top) / (windowHeight * 0.3));
           const footerOpacity = clamp(footerVisibility, 0, 1);
           
-          setScrollProgress(0.5); // Looking right in footer
+          setScrollProgress(0); // Looking left in footer
           setIsVisible(true);
           setPosition({
             x: footerX,
