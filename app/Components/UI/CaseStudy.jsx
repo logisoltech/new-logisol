@@ -58,7 +58,7 @@ const CaseStudy = () => {
       challenge: 'Creating a visually striking design while maintaining fast load times and SEO optimization',
       solution: 'Built with Next.js for optimal performance, implemented lazy loading and image optimization',
       color: 'from-blue-800 to-blue-950',
-      image: '/glonect-1.png',
+      image: '/glonect-3.png',
       hoverImage: '/glonect-2.png',
     },
     {
@@ -70,7 +70,7 @@ const CaseStudy = () => {
       challenge: 'Managing 10,000+ products with real-time stock sync across multiple warehouse locations',
       solution: 'Built custom inventory microservice with webhook-based sync and Redis caching for instant stock updates',
       color: 'from-gray-900 to-blue-950',
-      image: '/hitek-1.png',
+      image: '/hitek-3.png',
       hoverImage: '/hitek-2.png',
     },
     {
