@@ -20,11 +20,12 @@ export default function Home() {
   const aboutRef = useRef(null);
   const gapRef = useRef(null);
   const servicesRef = useRef(null);
+  const footerRef = useRef(null);
 
   return (
     <main className="text-white relative">
       <Navbar />
-      <ScrollableRobot heroRef={heroRef} aboutRef={aboutRef} gapRef={gapRef} servicesRef={servicesRef} />
+      <ScrollableRobot heroRef={heroRef} aboutRef={aboutRef} gapRef={gapRef} servicesRef={servicesRef} footerRef={footerRef} />
       <section ref={heroRef} className="relative z-50">
         <Hero />
       </section>
@@ -53,12 +54,14 @@ export default function Home() {
         <Testimonials />
       </section>
         <section className="relative">
-          <FAQ />
-        </section>
-        <section className="relative">
           <Blogs />
         </section>
-      <Footer />
+        <section className="relative">
+          <FAQ />
+        </section>
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 }

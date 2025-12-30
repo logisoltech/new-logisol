@@ -12,6 +12,7 @@ import { useCountry } from '../context/CountryContext';
 
 const Page = () => {
   const pricingRef = useRef(null);
+  const footerRef = useRef(null);
   const { convertPrice, getCurrency } = useCountry();
   const currency = getCurrency();
 
@@ -843,7 +844,9 @@ const Page = () => {
         </div>
       </section>
       <FAQ/>
-      <Footer/>
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 };

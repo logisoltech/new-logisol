@@ -12,6 +12,7 @@ import { headingFont } from '../Components/Font/headingFont';
 
 const Page = () => {
   const projectsRef = useRef(null);
+  const footerRef = useRef(null);
 
   return (
     <main className="text-white relative">
@@ -69,7 +70,9 @@ const Page = () => {
       </section>
 
       {/* Footer Component */}
-      <Footer />
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 };

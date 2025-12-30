@@ -291,24 +291,39 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
     ],
     'Graphic Design': [
       {
-        title: 'Brand Identity Design',
-        description: 'Create a memorable brand identity that resonates with your audience.',
-        image: '🎨',
+        title: 'Habibi Merch',
+        image: '/habibi-merch.png',
+        isImage: true,
       },
       {
-        title: 'UI/UX Design',
-        description: 'User-centered designs that enhance user experience and engagement.',
-        image: '💻',
+        title: 'Certifurb Merch',
+        image: '/certifurb-merch.png',
+        isImage: true,
       },
       {
-        title: 'Print Design',
-        description: 'Professional print materials including brochures, flyers, and business cards.',
-        image: '📄',
+        title: 'Eight Sol',
+        image: '/eight-sol.png',
+        isImage: true,
       },
       {
-        title: 'Logo Design',
-        description: 'Unique and impactful logos that represent your brand perfectly.',
-        image: '🖋️',
+        title: 'Smile Design',
+        image: '/smile.png',
+        isImage: true,
+      },
+      {
+        title: 'Garde',
+        image: '/garde.png',
+        isImage: true,
+      },
+      {
+        title: 'Antares',
+        image: '/antares.png',
+        isImage: true,
+      },
+      {
+        title: 'Alpine',
+        image: '/alpine.png',
+        isImage: true,
       },
     ],
     'Video Editing': [

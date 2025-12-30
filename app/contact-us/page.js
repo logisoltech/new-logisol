@@ -13,6 +13,7 @@ import { useCountry } from '../context/CountryContext';
 const Page = () => {
   const contactRef = useRef(null);
   const formRef = useRef(null);
+  const footerRef = useRef(null);
   const { getContactInfo } = useCountry();
   const contact = getContactInfo();
   const [formData, setFormData] = useState({
@@ -307,7 +308,9 @@ const Page = () => {
         </div>
       </section>
       <FAQ/>
-      <Footer/>
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 };

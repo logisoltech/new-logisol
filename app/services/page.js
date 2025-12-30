@@ -14,6 +14,7 @@ import CaseStudy from '../Components/UI/CaseStudy';
 
 const Page = () => {
   const servicesRef = useRef(null);
+  const footerRef = useRef(null);
 
   return (
     <main className="text-white relative">
@@ -63,7 +64,9 @@ const Page = () => {
       <CaseStudy />
       <Pricing />
       <FAQ />
-      <Footer/>
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 };

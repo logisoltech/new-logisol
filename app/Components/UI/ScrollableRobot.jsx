@@ -20,7 +20,7 @@ const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const easeInOutQuad = (t) =>
   t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
+const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef, footerRef }) => {
   const containerRef = useRef(null);
   const lastAboutPositionRef = useRef(null); // store last stable about position
   const [position, setPosition] = useState({
@@ -46,14 +46,50 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
 
   useEffect(() => {
     const updatePosition = () => {
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+
+      // If no aboutRef but we have footerRef, just handle footer
+      if (!aboutRef?.current && footerRef?.current) {
+        const footerRect = footerRef.current.getBoundingClientRect();
+        const footerContainer = document.getElementById('footer-model-container');
+        
+        // Check if footer is in view
+        if (footerRect.top < windowHeight && footerRect.bottom > 0) {
+          let footerX, footerY;
+          
+          if (footerContainer) {
+            const footerContainerRect = footerContainer.getBoundingClientRect();
+            footerX = footerContainerRect.left + footerContainerRect.width / 2;
+            footerY = footerContainerRect.top + footerContainerRect.height / 2;
+          } else {
+            footerX = windowWidth * 0.85;
+            footerY = footerRect.top + footerRect.height / 3;
+          }
+          
+          const footerVisibility = Math.min(1, (windowHeight - footerRect.top) / (windowHeight * 0.3));
+          const footerOpacity = clamp(footerVisibility, 0, 1);
+          
+          setScrollProgress(0.5);
+          setIsVisible(true);
+          setPosition({
+            x: footerX,
+            y: footerY,
+            opacity: footerOpacity,
+          });
+          return;
+        } else {
+          setIsVisible(false);
+          return;
+        }
+      }
+
       // Handle case where only aboutRef is available (e.g., about-us page)
       if (!aboutRef?.current) return;
       
-      // If heroRef or gapRef are null, handle about-only scenario
+      // If heroRef or gapRef are null, handle about-only scenario (sub-service pages)
       if (!heroRef?.current || !gapRef?.current) {
-        // About-only mode: just position model in about section
         const aboutRect = aboutRef.current.getBoundingClientRect();
-        const windowWidth = window.innerWidth;
         const aboutContainer = aboutRef.current.querySelector('#about-model-container') || 
                                aboutRef.current.querySelector('#custom-web-model-container') ||
                                aboutRef.current.querySelector('#digital-marketing-model-container') ||
@@ -65,7 +101,40 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         
         // Check if it's a sub-service page (not the main about page)
         const isSubServicePage = aboutContainer && !aboutRef.current.querySelector('#about-model-container');
-        
+
+        // Check if footer is in view - prioritize footer over about section
+        if (footerRef?.current) {
+          const footerRect = footerRef.current.getBoundingClientRect();
+          const footerContainer = document.getElementById('footer-model-container');
+          
+          // If footer top is in view, show robot in footer
+          if (footerRect.top < windowHeight * 0.7) {
+            let footerX, footerY;
+            
+            if (footerContainer) {
+              const footerContainerRect = footerContainer.getBoundingClientRect();
+              footerX = footerContainerRect.left + footerContainerRect.width / 2;
+              footerY = footerContainerRect.top + footerContainerRect.height / 2;
+            } else {
+              footerX = windowWidth * 0.85;
+              footerY = footerRect.top + footerRect.height / 3;
+            }
+            
+            const footerVisibility = Math.min(1, (windowHeight * 0.7 - footerRect.top) / (windowHeight * 0.3));
+            const footerOpacity = clamp(footerVisibility, 0, 1);
+            
+            setScrollProgress(0.5); // Looking right in footer
+            setIsVisible(true);
+            setPosition({
+              x: footerX,
+              y: footerY,
+              opacity: footerOpacity,
+            });
+            return;
+          }
+        }
+
+        // About section is in view - show robot there
         let aboutX, aboutY;
         if (aboutContainer) {
           const aboutContainerRect = aboutContainer.getBoundingClientRect();
@@ -95,8 +164,6 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
       const heroRect = heroRef.current.getBoundingClientRect();
       const aboutRect = aboutRef.current.getBoundingClientRect();
       const gapRect = gapRef.current.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
 
       const scrollY = window.scrollY || window.pageYOffset;
       const heroPageTop = heroRef.current.offsetTop;
@@ -330,7 +397,41 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
         return;
       }
 
-      // ---------- AFTER FLYOUT / SERVICES ----------
+      // ---------- FOOTER SECTION: Robot reappears ----------
+      if (footerRef?.current) {
+        const footerRect = footerRef.current.getBoundingClientRect();
+        const footerContainer = document.getElementById('footer-model-container');
+        
+        // Check if footer is in view (top of footer is visible)
+        if (footerRect.top < windowHeight && footerRect.bottom > 0) {
+          let footerX, footerY;
+          
+          if (footerContainer) {
+            const footerContainerRect = footerContainer.getBoundingClientRect();
+            footerX = footerContainerRect.left + footerContainerRect.width / 2;
+            footerY = footerContainerRect.top + footerContainerRect.height / 2;
+          } else {
+            // Fallback: position on the right side of footer
+            footerX = windowWidth * 0.85;
+            footerY = footerRect.top + footerRect.height / 3;
+          }
+          
+          // Calculate fade-in based on how much footer is in view
+          const footerVisibility = Math.min(1, (windowHeight - footerRect.top) / (windowHeight * 0.3));
+          const footerOpacity = clamp(footerVisibility, 0, 1);
+          
+          setScrollProgress(0.5); // Looking right in footer
+          setIsVisible(true);
+          setPosition({
+            x: footerX,
+            y: footerY,
+            opacity: footerOpacity,
+          });
+          return;
+        }
+      }
+
+      // ---------- AFTER FLYOUT / BEFORE FOOTER ----------
       setIsVisible(false);
       setPosition({
         x: windowWidth + 800,
@@ -359,7 +460,7 @@ const ScrollableRobot = ({ heroRef, aboutRef, gapRef, servicesRef }) => {
       if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('resize', updatePosition);
     };
-  }, [heroRef, aboutRef, gapRef, servicesRef]);
+  }, [heroRef, aboutRef, gapRef, servicesRef, footerRef]);
 
   const modelSize = isMobile ? '280px' : '500px';
 

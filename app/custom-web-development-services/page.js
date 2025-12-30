@@ -16,6 +16,7 @@ const Page = () => {
   const contentRef = useRef(null);
   const leftAreaRef = useRef(null);
   const rightAreaRef = useRef(null);
+  const footerRef = useRef(null);
 
   const [activeParagraph, setActiveParagraph] = useState(0);
 
@@ -194,7 +195,7 @@ const Page = () => {
     <main className="text-white relative">
       <Navbar />
 
-      <ScrollableRobot heroRef={null} aboutRef={contentRef} gapRef={null} servicesRef={null} />
+      <ScrollableRobot heroRef={null} aboutRef={contentRef} gapRef={null} servicesRef={null} footerRef={footerRef} />
 
       <div className="flex flex-col items-center justify-center h-[20rem] sm:h-[25rem] lg:h-[30rem] px-4">
         <h1
@@ -326,7 +327,9 @@ const Page = () => {
         <FAQ />
       </section>
 
-      <Footer />
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 };

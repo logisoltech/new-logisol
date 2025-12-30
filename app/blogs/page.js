@@ -37,7 +37,7 @@ const Page = () => {
     <main className="text-white relative">
       <Navbar />
 
-      <ScrollableRobot heroRef={null} aboutRef={null} gapRef={null} servicesRef={null} />
+      <ScrollableRobot heroRef={null} aboutRef={null} gapRef={null} servicesRef={null} footerRef={footerRef} />
 
       {/* Heading Section */}
       <div className="flex flex-col items-center justify-center h-[30rem]">
@@ -116,7 +116,9 @@ const Page = () => {
       </section>
 
       {/* Footer Component */}
-      <Footer />
+      <section ref={footerRef} className="relative">
+        <Footer />
+      </section>
     </main>
   );
 };
