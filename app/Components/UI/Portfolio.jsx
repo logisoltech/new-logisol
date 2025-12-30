@@ -328,24 +328,29 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
     ],
     'Video Editing': [
       {
-        title: 'Video Production',
-        description: 'Professional video production for marketing, training, and entertainment.',
-        image: '🎬',
+        title: 'Video Reel 1',
+        videoId: 'MNVqDmYdAWs',
+        isVideo: true,
       },
       {
-        title: 'Video Editing',
-        description: 'Expert video editing services to bring your vision to life.',
-        image: '✂️',
+        title: 'Video Reel 2',
+        videoId: 'FqvEyWxB9YQ',
+        isVideo: true,
       },
       {
-        title: 'Motion Graphics',
-        description: 'Dynamic motion graphics and animations for engaging visual content.',
-        image: '🎞️',
+        title: 'Video Reel 3',
+        videoId: 'AAioyIZc2nM',
+        isVideo: true,
       },
       {
-        title: 'Video Optimization',
-        description: 'Optimize videos for web, social media, and various platforms.',
-        image: '📹',
+        title: 'Video Reel 4',
+        videoId: 't6tNT0n_mn8',
+        isVideo: true,
+      },
+      {
+        title: 'Video Reel 5',
+        videoId: 'qrh_1rF1YZs',
+        isVideo: true,
       },
     ],
   };
@@ -451,7 +456,7 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
                 transitionDelay: `${index * 50}ms`,
               }}
             >
-              {/* Image - Full Cover with Slide Down Effect on Hover */}
+              {/* Content - Image, Video, or Emoji */}
               <div className="absolute inset-0 overflow-hidden">
                 {item.isImage ? (
                   <img 
@@ -459,6 +464,15 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
                     alt={item.title}
                     className="w-full h-full object-cover object-top"
                     loading="lazy"
+                  />
+                ) : item.isVideo ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${item.videoId}?loop=1&playlist=${item.videoId}`}
+                    title={item.title}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 via-purple-500/20 to-cyan-400/20 flex items-center justify-center">
