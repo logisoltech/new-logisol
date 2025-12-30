@@ -11,6 +11,7 @@ import { headingFont } from '../Components/Font/headingFont';
 
 const Page = () => {
   const pageRef = useRef(null);
+  const footerRef = useRef(null);
 
   const blogPosts = [
     {
