@@ -41,20 +41,36 @@ const Page = () => {
     setSubmitStatus(null);
 
     try {
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        {
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          email: formData.email,
-          contact: formData.mobile,
-          budget: '',
-          message: formData.message,
-        },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      // Validate environment variables
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS configuration missing:', {
+          serviceId: !!serviceId,
+          templateId: !!templateId,
+          publicKey: !!publicKey
+        });
+        throw new Error('EmailJS configuration is incomplete. Please check your environment variables.');
+      }
+
+      const templateParams = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        contact: formData.mobile,
+        message: formData.message,
+      };
+
+      const response = await emailjs.send(
+        serviceId,
+        templateId,
+        templateParams,
+        publicKey
       );
 
+      console.log('EmailJS Success:', response);
       setSubmitStatus('success');
       setFormData({
         firstName: '',
@@ -65,7 +81,15 @@ const Page = () => {
         notRobot: false
       });
     } catch (error) {
-      console.error('EmailJS Error:', error);
+      console.error('EmailJS Error Details:', {
+        error,
+        message: error?.message || 'Unknown error',
+        text: error?.text || 'No error text',
+        status: error?.status || 'No status',
+        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ? 'Set' : 'Missing'
+      });
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

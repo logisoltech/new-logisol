@@ -75,25 +75,35 @@ const GetStartedForm = () => {
     setSubmitStatus(null);
 
     try {
-      // Split name into first and last
-      const nameParts = formData.name.trim().split(' ');
-      const firstName = nameParts[0] || '';
-      const lastName = nameParts.slice(1).join(' ') || '';
+      // Validate environment variables
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID2;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
 
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        {
-          first_name: firstName,
-          last_name: lastName,
-          email: formData.email,
-          contact: formData.phone,
-          budget: '',
-          message: `Schedule a call request for: ${formData.scheduleDate ? formatDate(formData.scheduleDate) : 'Not specified'}`,
-        },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      if (!serviceId || !templateId || !publicKey) {
+        console.error('EmailJS configuration missing:', {
+          serviceId: !!serviceId,
+          templateId: !!templateId,
+          publicKey: !!publicKey
+        });
+        throw new Error('EmailJS configuration is incomplete. Please check your environment variables.');
+      }
+
+      const templateParams = {
+        name: formData.name.trim(),
+        phone: formData.phone,
+        date: formData.scheduleDate ? formatDate(formData.scheduleDate) : 'Not specified',
+        email: formData.email,
+      };
+
+      const response = await emailjs.send(
+        serviceId,
+        templateId,
+        templateParams,
+        publicKey
       );
 
+      console.log('EmailJS Success:', response);
       setSubmitStatus('success');
       setFormData({
         name: '',
@@ -102,7 +112,15 @@ const GetStartedForm = () => {
         scheduleDate: null
       });
     } catch (error) {
-      console.error('EmailJS Error:', error);
+      console.error('EmailJS Error Details:', {
+        error,
+        message: error?.message || 'Unknown error',
+        text: error?.text || 'No error text',
+        status: error?.status || 'No status',
+        serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID2,
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ? 'Set' : 'Missing'
+      });
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
