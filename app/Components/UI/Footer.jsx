@@ -163,7 +163,7 @@ const Footer = () => {
             <div>
               <h4 className="text-cyan-400 font-bold text-lg lg:text-xl mb-4">Services</h4>
               <ul className="space-y-2">
-                {services.map((service, index) => (
+                {supportLinks.map((service, index) => (
                   <li key={index}>
                     <a
                       href="#"
@@ -180,7 +180,7 @@ const Footer = () => {
             <div>
               <h4 className="text-cyan-400 font-bold text-lg lg:text-xl mb-4">Support</h4>
               <ul className="space-y-2">
-                {supportLinks.map((link, index) => (
+                {services.map((link, index) => (
                   <li key={index}>
                     <a
                       href="#"

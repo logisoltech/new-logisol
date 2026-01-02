@@ -114,10 +114,41 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
 
   // Reset scroll position when tab changes
   useEffect(() => {
-    if (trackRef.current) {
+    if (trackRef.current && portfolioSectionRef.current) {
+      // Store exact scroll position and section's current position
+      const scrollY = window.scrollY || window.pageYOffset;
+      const sectionRect = portfolioSectionRef.current.getBoundingClientRect();
+      const sectionTopRelative = sectionRect.top; // Position relative to viewport
+      
+      // Kill existing trigger
+      const existingTrigger = ScrollTrigger.getById('portfolioHorizontal');
+      if (existingTrigger) {
+        existingTrigger.kill(true);
+      }
+      
+      // Reset horizontal position
       gsap.set(trackRef.current, { x: 0 });
-      ScrollTrigger.refresh();
-      setTimeout(checkScrollPosition, 200);
+      
+      // After DOM updates, check if section moved and compensate
+      requestAnimationFrame(() => {
+        const newSectionRect = portfolioSectionRef.current.getBoundingClientRect();
+        const sectionMovement = newSectionRect.top - sectionTopRelative;
+        
+        // Adjust scroll to keep section in same visual position
+        const adjustedScroll = scrollY - sectionMovement;
+        window.scrollTo({ top: adjustedScroll, behavior: 'auto' });
+        
+        // Refresh ScrollTrigger after position is adjusted
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+          // Final position check after refresh
+          requestAnimationFrame(() => {
+            const finalScroll = scrollY - sectionMovement;
+            window.scrollTo({ top: finalScroll, behavior: 'auto' });
+            checkScrollPosition();
+          });
+        }, 50);
+      });
     }
   }, [activeTab]);
 
@@ -149,7 +180,7 @@ const Portfolio = ({ defaultTab = 'Web Development' }) => {
         scrollTrigger: {
           id: 'portfolioHorizontal',
           trigger: track,  // Trigger on the track (cards row) itself
-          start: 'top 40%',  // Start when track top reaches 55% down viewport (just a bit lower than center)
+          start: 'top 40%',  // Start when track top reaches 40% down viewport
           end: `+=${scrollDistance}`,   // scroll length matches horizontal distance
           pin: section,  // Pin the entire section
           scrub: 1,                    // "glide" but tied to scroll, no runaway inertia
