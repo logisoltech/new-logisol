@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { headingFont } from '../Font/headingFont';
 
@@ -8,6 +8,16 @@ const Footer = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,13 +81,15 @@ const Footer = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
         {/* Top Section - Newsletter + Links + Robot */}
         <div className="relative flex flex-col lg:flex-row lg:items-start gap-8 lg:gap-12">
-          {/* Robot Model Container - robot is rendered by ScrollableRobot */}
-          <div 
-            id="footer-model-container"
-            className="hidden lg:block absolute right-0 xl:-right-8 top-1/3 -translate-y-1/2 w-64 h-80 xl:w-80 xl:h-96 pointer-events-none z-20"
-          >
-            {/* Robot rendered by ScrollableRobot when footer is in view */}
-          </div>
+          {/* Robot Model Container - robot is rendered by ScrollableRobot - Hidden on mobile only */}
+          {!isMobile && (
+            <div 
+              id="footer-model-container"
+              className="absolute right-0 xl:-right-8 top-1/3 -translate-y-1/2 w-64 h-80 xl:w-80 xl:h-96 pointer-events-none z-20"
+            >
+              {/* Robot rendered by ScrollableRobot when footer is in view */}
+            </div>
+          )}
 
           {/* Column 1: Newsletter */}
           <div className="lg:w-[280px] xl:w-[320px] flex-shrink-0">

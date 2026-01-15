@@ -50,6 +50,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
     'Web Development',
     'App Development',
     'SEO',
+    'Social Media Marketing',
     'Design & Video Editing',
   ];
 
@@ -191,6 +192,52 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
         ],
       },
     ],
+    'Social Media Marketing': [
+      {
+        id: 'starter-social',
+        title: 'Starter Social',
+        description: 'Consistent, quality content for growing a basic social presence.',
+        price: 399,
+        priceUnit: '/month',
+        isPopular: false,
+        features: [
+          '2 Platforms (e.g., Facebook + Instagram)',
+          '8 Posts/Month',
+          'Basic Design & Hashtags',
+          'Monthly Reporting',
+        ],
+      },
+      {
+        id: 'growth-social',
+        title: 'Growth Social',
+        description: 'Elevated content, light ads, and strategic engagement.',
+        price: 799,
+        priceUnit: '/month',
+        isPopular: true,
+        features: [
+          '3 Platforms',
+          '16 Posts + 4 Reels / Month',
+          'Comments & DMs Monitoring',
+          'Ad Campaign Setup',
+          'Monthly Strategy Call',
+        ],
+      },
+      {
+        id: 'pro-social',
+        title: 'Pro Social',
+        description: 'High-volume, data-driven content management for growing brands.',
+        price: 1499,
+        priceUnit: '/month',
+        isPopular: false,
+        features: [
+          'All Major Platforms',
+          '30+ Posts / Month + 8 Reels',
+          'Community Management',
+          'Paid Campaign Management',
+          'Competitor Research + Reporting Dashboard',
+        ],
+      },
+    ],
     'Design & Video Editing': [
       {
         id: 'creative-starter',
@@ -299,7 +346,7 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
           {currentPlans.map((plan, index) => (
             <div
               key={plan.id}
-              className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group flex-shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[calc(33.333vw-1.5rem)] xl:w-[calc(30vw-1.5rem)] min-h-[500px] lg:min-h-[550px]"
+              className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl overflow-hidden hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out cursor-pointer group shrink-0 w-[85vw] sm:w-[60vw] md:w-[45vw] lg:w-[calc(33.333vw-1.5rem)] xl:w-[calc(30vw-1.5rem)] min-h-[500px] lg:min-h-[550px]"
               style={{
                 transitionDelay: `${index * 50}ms`,
               }}
@@ -358,12 +405,13 @@ const Pricing = ({ defaultTab = 'Web Development', hideTabs = false }) => {
                       (activeTab === 'Web Development' && (featureIndex === 2 || featureIndex === 4)) ||
                       (activeTab === 'App Development' && (featureIndex === 2 || featureIndex === 3)) ||
                       (activeTab === 'SEO' && (featureIndex === 2 || featureIndex === 3)) ||
+                      (activeTab === 'Social Media Marketing' && (featureIndex === 1 || featureIndex === 3)) ||
                       (activeTab === 'Design & Video Editing' && (featureIndex === 1 || featureIndex === 2));
                     
                     return (
                       <div key={featureIndex}>
                         <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0"></div>
+                          <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
                           <span className="text-white/90 text-sm lg:text-base">
                             {feature}
                           </span>

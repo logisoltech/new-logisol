@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
   const testimonialsRef = useRef(null);
 
   const testimonials = [
@@ -42,47 +43,66 @@ const Testimonials = () => {
   ];
 
   const totalCards = testimonials.length;
-  const cardsPerView = 3;
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : totalCards - cardsPerView));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < totalCards - cardsPerView ? prev + 1 : 0));
-  };
-
-  // Auto-scroll functionality (optional)
+  // Responsive cards per view
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (totalCards > cardsPerView) {
-        handleNext();
+    const updateCardsPerView = () => {
+      if (window.innerWidth < 640) {
+        setCardsPerView(1); // Mobile: 1 card
+      } else if (window.innerWidth < 1024) {
+        setCardsPerView(2); // Tablet: 2 cards
+      } else {
+        setCardsPerView(3); // Desktop: 3 cards
       }
+    };
+
+    updateCardsPerView();
+    window.addEventListener('resize', updateCardsPerView);
+    return () => window.removeEventListener('resize', updateCardsPerView);
+  }, []);
+
+  // Reset index when cardsPerView changes
+  useEffect(() => {
+    const maxIndex = Math.max(0, totalCards - cardsPerView);
+    if (currentIndex > maxIndex) {
+      setCurrentIndex(maxIndex);
+    }
+  }, [cardsPerView, totalCards]);
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    if (totalCards <= cardsPerView) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const maxIndex = Math.max(0, totalCards - cardsPerView);
+        return prev < maxIndex ? prev + 1 : 0;
+      });
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentIndex]);
+  }, [currentIndex, cardsPerView, totalCards]);
+
+  const maxIndex = Math.max(0, totalCards - cardsPerView);
 
   return (
-    <section ref={testimonialsRef} className="relative w-full py-16 lg:py-24 overflow-hidden">
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
+    <section ref={testimonialsRef} className="relative w-full py-12 sm:py-16 lg:py-24 overflow-hidden">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 mb-12 lg:mb-16">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-6 mb-8 sm:mb-12 lg:mb-16">
           {/* Left - Title */}
           <div className="flex-1">
-            <p className="text-cyan-400 text-sm md:text-base font-medium mb-2">
+            <p className="text-cyan-400 text-xs sm:text-sm md:text-base font-medium mb-2">
               * TESTIMONIALS
             </p>
             <h2
-              className={`${headingFont.className} font-extrabold text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight text-white`}
+              className={`${headingFont.className} font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight text-white`}
             >
               What <span className="text-cyan-400">clients</span> are saying
             </h2>
           </div>
-
-          
         </div>
 
-        {/* Testimonials Cards */}
+        {/* Testimonials Cards Container */}
         <div className="relative overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
@@ -93,16 +113,16 @@ const Testimonials = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 px-3"
+                className="shrink-0 px-2 sm:px-3"
                 style={{ width: `${100 / cardsPerView}%` }}
               >
-                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 lg:p-8 h-full shadow-2xl hover:bg-white/15 hover:border-cyan-400/50 transition-all duration-300">
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 h-full shadow-2xl hover:bg-white/15 hover:border-cyan-400/50 transition-all duration-300">
                   {/* Rating Stars */}
-                  <div className="flex gap-1 mb-4">
+                  <div className="flex gap-1 mb-3 sm:mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <svg
                         key={i}
-                        className="w-5 h-5 text-yellow-400"
+                        className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -112,32 +132,36 @@ const Testimonials = () => {
                   </div>
 
                   {/* Headline */}
-                  <h3 className="text-white font-bold text-lg lg:text-xl mb-4 leading-tight">
+                  <h3 className="text-white font-bold text-base sm:text-lg lg:text-xl mb-3 sm:mb-4 leading-tight">
                     {testimonial.headline}
                   </h3>
 
                   {/* Body Text */}
-                  <p className="text-white/70 text-sm lg:text-base leading-relaxed mb-6">
+                  <p className="text-white/70 text-xs sm:text-sm lg:text-base leading-relaxed mb-4 sm:mb-6">
                     {testimonial.body}
                   </p>
 
                   {/* Divider */}
-                  <div className="border-t border-white/20 mb-6"></div>
+                  <div className="border-t border-white/20 mb-4 sm:mb-6"></div>
 
                   {/* Author Info */}
-                  <div className="flex items-center gap-4 overflow-hidden">
+                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                     <img
                       src={testimonial.author.avatar}
                       alt={testimonial.author.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-white/20 flex-shrink-0"
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white/20 shrink-0"
                       onError={(e) => {
                         e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.author.name)}&background=06b6d4&color=fff&size=100`;
                       }}
                     />
-                    <div className="text-white font-bold text-base lg:text-lg leading-tight whitespace-nowrap overflow-hidden text-ellipsis min-w-0">
-                      <span>{testimonial.author.name}</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-white font-bold text-sm sm:text-base lg:text-lg leading-tight truncate">
+                        {testimonial.author.name}
+                      </div>
                       {testimonial.author.title && (
-                        <span className="text-white/60 font-normal">, {testimonial.author.title}</span>
+                        <div className="text-white/60 font-normal text-xs sm:text-sm lg:text-base truncate">
+                          {testimonial.author.title}
+                        </div>
                       )}
                     </div>
                   </div>
@@ -147,9 +171,9 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Dots */}
-        <div className="flex justify-center gap-2 mt-8 lg:hidden">
-          {[...Array(Math.max(1, totalCards - cardsPerView + 1))].map((_, index) => (
+        {/* Navigation Dots */}
+        <div className="flex justify-center gap-2 mt-6 sm:mt-8">
+          {[...Array(Math.max(1, maxIndex + 1))].map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
