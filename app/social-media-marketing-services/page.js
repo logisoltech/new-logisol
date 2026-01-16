@@ -1,15 +1,16 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
+import Link from 'next/link';
 import Navbar from '../Components/UI/Navbar';
 import ScrollableRobot from '../Components/UI/ScrollableRobot';
 import Slider from '../Components/UI/Slider';
 import FAQ from '../Components/UI/FAQ';
 import Footer from '../Components/UI/Footer';
 import Pricing from '../Components/UI/Pricing';
-import CaseStudy from '../Components/UI/CaseStudy';
 import Portfolio from '../Components/UI/Portfolio';
 import { headingFont } from '../Components/Font/headingFont';
+import { useCountry } from '../context/CountryContext';
 
 const Page = () => {
   const pageRef = useRef(null);
@@ -19,6 +20,14 @@ const Page = () => {
   const footerRef = useRef(null);
 
   const [activeParagraph, setActiveParagraph] = useState(0);
+  const { convertPrice, getCurrency } = useCountry();
+  const currency = getCurrency();
+
+  // Format price with currency symbol
+  const formatPrice = (usdPrice) => {
+    const converted = convertPrice(usdPrice);
+    return `${currency.symbol}${converted.toLocaleString()}`;
+  };
 
   // lock state
   const lockRef = useRef(false);
@@ -281,8 +290,203 @@ const Page = () => {
       </section>
 
       <Portfolio defaultTab="Digital Marketing" />
-      <CaseStudy />
-      <Pricing defaultTab="Design & Video Editing" hideTabs={true} />
+
+      {/* Social Media Marketing Packages Section */}
+      <section className="relative w-full py-16 lg:py-24">
+        <div className="w-full max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Main Heading */}
+          <h2
+            className={`${headingFont.className} font-extrabold text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-white mb-12 lg:mb-16`}
+          >
+            Social Media <span className="text-cyan-400">Marketing</span>
+          </h2>
+
+          {/* Pricing Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {/* Card 1: Starter Social */}
+            <div className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl p-6 lg:p-8 hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out relative overflow-hidden">
+              {/* Glass gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-purple-500/10 rounded-2xl pointer-events-none" />
+              
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-cyan-400/50 bg-cyan-400/20 flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 lg:w-8 lg:h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2 text-center">Starter Social</h3>
+
+                {/* Description */}
+                <p className="text-white/70 text-sm lg:text-base mb-6 text-center">
+                  Consistent, quality content for growing a basic social presence.
+                </p>
+
+                {/* Price */}
+                <div className="mb-6 text-center">
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(399)}</span>
+                  <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
+                </div>
+
+                {/* Button */}
+                <Link href="/contact-us" className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-all mb-6 block text-center">
+                  Get Started
+                </Link>
+
+                {/* Features */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">2 Platforms (e.g., Facebook + Instagram)</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">8 Posts/Month</span>
+                  </div>
+                  <div className="border-t border-white/10 my-3"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Basic Design & Hashtags</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Monthly Reporting</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Growth Social (POPULAR) */}
+            <div className="backdrop-blur-2xl bg-white/5 border border-cyan-400/50 rounded-2xl p-6 lg:p-8 hover:bg-white/10 hover:border-cyan-400 transition-all duration-500 ease-out relative overflow-hidden">
+              {/* POPULAR Tag */}
+              <div className="absolute top-4 right-4 bg-cyan-400 text-white text-xs font-bold px-3 py-1 rounded-full">
+                POPULAR
+              </div>
+
+              {/* Glass gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/10 rounded-2xl pointer-events-none" />
+              
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-cyan-400 bg-cyan-400/30 flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 lg:w-8 lg:h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2 text-center">Growth Social</h3>
+
+                {/* Description */}
+                <p className="text-white/70 text-sm lg:text-base mb-6 text-center">
+                  Elevated content, light ads, and strategic engagement.
+                </p>
+
+                {/* Price */}
+                <div className="mb-6 text-center">
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(799)}</span>
+                  <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
+                </div>
+
+                {/* Button */}
+                <Link href="/contact-us" className="w-full bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-500 hover:to-cyan-600 text-black py-3 rounded-lg font-semibold transition-all mb-6 block text-center">
+                  Get Started
+                </Link>
+
+                {/* Features */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">3 Platforms</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">16 Posts + 4 Reels / Month</span>
+                  </div>
+                  <div className="border-t border-white/10 my-3"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Comments & DMs Monitoring</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Ad Campaign Setup</span>
+                  </div>
+                  <div className="border-t border-white/10 my-3"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Monthly Strategy Call</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Pro Social */}
+            <div className="backdrop-blur-2xl bg-white/5 border border-white/20 rounded-2xl p-6 lg:p-8 hover:bg-white/10 hover:border-cyan-400/50 transition-all duration-500 ease-out relative overflow-hidden">
+              {/* Glass gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-purple-500/10 rounded-2xl pointer-events-none" />
+              
+              <div className="relative z-10">
+                {/* Icon */}
+                <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border-2 border-cyan-400/50 bg-cyan-400/20 flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 lg:w-8 lg:h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-white font-bold text-xl lg:text-2xl mb-2 text-center">Pro Social</h3>
+
+                {/* Description */}
+                <p className="text-white/70 text-sm lg:text-base mb-6 text-center">
+                  High-volume, data-driven content management for growing brands.
+                </p>
+
+                {/* Price */}
+                <div className="mb-6 text-center">
+                  <span className="text-cyan-400 font-extrabold text-3xl lg:text-4xl">{formatPrice(1499)}</span>
+                  <span className="text-white/70 text-sm lg:text-base ml-2">/month</span>
+                </div>
+
+                {/* Button */}
+                <Link href="/contact-us" className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-semibold transition-all mb-6 block text-center">
+                  Get Started
+                </Link>
+
+                {/* Features */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">All Major Platforms</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">30+ Posts / Month + 8 Reels</span>
+                  </div>
+                  <div className="border-t border-white/10 my-3"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Community Management</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Paid Campaign Management</span>
+                  </div>
+                  <div className="border-t border-white/10 my-3"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 shrink-0"></div>
+                    <span className="text-white/90 text-sm lg:text-base">Competitor Research + Reporting Dashboard</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Pricing defaultTab="Social Media Marketing" hideTabs={true} />
 
       <section ref={pageRef} className="relative">
         <FAQ />
