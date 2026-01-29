@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { CountryProvider } from "./context/CountryContext";
 import Providers from "./Providers";
@@ -25,6 +26,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
+        {/* TrustBox script - loads early for Trustpilot widget (as per Trustpilot: in head or top of page) */}
+        <Script
+          src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"
+          strategy="beforeInteractive"
+        />
         {/* Silk Background - covers entire website */}
         <SilkBackgroundWrapper />
         <CountryProvider>
