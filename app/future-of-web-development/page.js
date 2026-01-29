@@ -23,7 +23,7 @@ const Page = () => {
         </h1>
         
         {/* Trust Badges */}
-        <div className="flex items-center justify-center gap-4 sm:gap-6 mt-6 sm:mt-8 flex-wrap">
+        <div className="flex items-start justify-center gap-4 sm:gap-6 mt-6 sm:mt-8 flex-wrap">
           <img 
             src="/clutch.png" 
             alt="Clutch" 
@@ -34,20 +34,27 @@ const Page = () => {
             alt="Google" 
             className="h-8 sm:h-10 lg:h-14 object-contain opacity-80 hover:opacity-100 transition-opacity"
           />
-          <a
-            href="https://www.trustpilot.com/review/logisoltech.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="trustpilot-widget flex items-center h-8 sm:h-10 lg:h-14 [&>img]:h-full [&>img]:w-auto [&>img]:object-contain [&>img]:opacity-80 hover:[&>img]:opacity-100 [&>img]:transition-opacity"
-            data-locale="en-US"
-            data-template-id="56278e9abfbbba0bdcd568bc"
-            data-businessunit-id="6852853d257a8efcadfee24a"
-            data-style-height="52px"
-            data-style-width="100%"
-            data-token="0090270f-1ff8-4940-a765-405330145a39"
-          >
-            <img src="/trust.png" alt="Trustpilot" className="h-full w-auto object-contain" />
-          </a>
+          <div className="flex flex-col items-start gap-1">
+            <a
+              href="https://www.trustpilot.com/review/logisoltech.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block"
+            >
+              <img src="/trust.png" alt="Trustpilot" className="h-8 sm:h-10 lg:h-14 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
+            </a>
+{/* <div
+              className="trustpilot-widget -ml-15"
+              data-locale="en-US"
+              data-template-id="56278e9abfbbba0bdcd568bc"
+              data-businessunit-id="6852853d257a8efcadfee24a"
+              data-style-height="100%"
+              data-style-width="100%"
+              data-token="0090270f-1ff8-4940-a765-405330145a39"
+            >
+              <a href="https://www.trustpilot.com/review/logisoltech.com" target="_blank" rel="noopener">Trustpilot</a>
+            </div> */}
+          </div>
         </div>
       </div>
 
