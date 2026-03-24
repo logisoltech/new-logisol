@@ -18,6 +18,7 @@ export const CountryProvider = ({ children }) => {
   const [exchangeRates, setExchangeRates] = useState({
     US: 1,      // Base currency (USD)
     CA: 1.37,   // Fallback rate: 1 USD = 1.37 CAD
+    AE: 3.67,   // Fallback rate: 1 USD = 3.67 AED
   });
 
   const currencies = {
@@ -32,6 +33,12 @@ export const CountryProvider = ({ children }) => {
       symbol: '$',
       name: 'Canada',
       flag: '/canada-20.png'
+    },
+    AE: {
+      code: 'AED',
+      symbol: 'د.إ',
+      name: 'UAE',
+      flag: '/uae-20.png'
     }
   };
 
@@ -49,6 +56,13 @@ export const CountryProvider = ({ children }) => {
       phoneLink: 'tel:+15873247424',
       address: 'Evanston, Calgary, Alberta, Canada',
       addressLink: 'https://maps.google.com/?q=100+King+Street+West+Toronto+Ontario+Canada',
+      email: 'info@logisol.tech',
+    },
+    AE: {
+      phone: '+971-52-873-9646',
+      phoneLink: 'tel:+971528739646',
+      address: 'Office E-21, BN Complex, Plot #321, Al Muteena, P.O Box: 235819, United Arab Emirates',
+      addressLink: 'https://maps.google.com/?q=Al+Muteena+Dubai+United+Arab+Emirates',
       email: 'info@logisol.tech',
     }
   };
@@ -71,6 +85,7 @@ export const CountryProvider = ({ children }) => {
         setExchangeRates({
           US: 1,
           CA: data.conversion_rates.CAD || 1.37, // Fallback if CAD not available
+          AE: data.conversion_rates.AED || 3.67, // Fallback if AED not available
         });
         console.log('Exchange rates updated:', data.conversion_rates);
       }
