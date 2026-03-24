@@ -61,7 +61,7 @@ export const CountryProvider = ({ children }) => {
     AE: {
       phone: '+971-52-873-9646',
       phoneLink: 'tel:+971528739646',
-      address: 'Office E-21, BN Complex, Plot #321, Al Muteena, P.O Box: 235819, United Arab Emirates',
+      address: 'Office E-21, BN Complex, Plot #321, Al Muteena, UAE',
       addressLink: 'https://maps.google.com/?q=Al+Muteena+Dubai+United+Arab+Emirates',
       email: 'info@logisol.tech',
     }
