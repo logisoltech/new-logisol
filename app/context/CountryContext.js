@@ -36,7 +36,7 @@ export const CountryProvider = ({ children }) => {
     },
     AE: {
       code: 'AED',
-      symbol: 'د.إ',
+      symbol: 'AED ',
       name: 'UAE',
       flag: '/uae-20.png'
     }
