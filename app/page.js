@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import Hero from "./Components/UI/Hero";
 import Navbar from "./Components/UI/Navbar";
+import Aurora from "./Components/UI/Aurora";
 import About from "./Components/UI/About";
 import Services from "./Components/UI/Services";
 import ScrollableRobot from "./Components/UI/ScrollableRobot";
@@ -24,11 +25,24 @@ export default function Home() {
 
   return (
     <main className="text-white relative">
-      <Navbar />
-      <ScrollableRobot heroRef={heroRef} aboutRef={aboutRef} gapRef={gapRef} servicesRef={servicesRef} footerRef={footerRef} />
-      <section ref={heroRef} className="relative z-50">
-        <Hero />
-      </section>
+      <div className="relative isolate">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-0 right-0 bottom-0 -top-2 z-0 bg-black [&_canvas]:block [&_canvas]:h-full [&_canvas]:w-full"
+        >
+          <Aurora
+            colorStops={["#3B82F6", "#37006a", "#0025fa"]}
+            blend={0.5}
+            amplitude={1.0}
+            speed={1}
+          />
+        </div>
+        <Navbar />
+        <ScrollableRobot heroRef={heroRef} aboutRef={aboutRef} gapRef={gapRef} servicesRef={servicesRef} footerRef={footerRef} />
+        <section ref={heroRef} className="relative z-50">
+          <Hero />
+        </section>
+      </div>
       <section ref={aboutRef} className="relative min-h-screen">
         <About />
       </section>

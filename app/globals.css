@@ -115,8 +115,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    margin: 0;
+    padding: 0;
+  }
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
   }
   /* Hide robot model when menu is open */
   body.menu-open .robot-model-container {

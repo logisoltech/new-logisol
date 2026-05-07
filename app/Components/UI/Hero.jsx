@@ -13,7 +13,6 @@ const Hero = () => {
       className="relative min-h-screen lg:h-[calc(100vh-96px)] overflow-hidden pb-8 lg:pb-0"
       style={{ isolation: 'isolate' }}
     >
-      {/* Main content */}
       <div className="relative z-50 w-full max-w-7xl mx-auto px-4 lg:px-8 h-full">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-4 lg:gap-10 pt-4 lg:pt-28">
           {/* LEFT - Text Content */}

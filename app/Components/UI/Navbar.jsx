@@ -102,10 +102,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${font.className} sticky top-0 z-[9999]`}
+      className={`${font.className} sticky top-0 z-[9999] pt-4 lg:pt-6`}
     >
       {/* Glassy Material Navbar Container */}
-      <div className="w-[95%] lg:w-[80%] mx-auto mt-4 lg:mt-6 backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full relative z-[99999]">
+      <div className="w-[95%] lg:w-[80%] mx-auto backdrop-blur-2xl bg-white/5 border border-white/20 shadow-2xl rounded-full relative z-[99999]">
         <div className="w-full mx-auto px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between relative">
           {/* Logo */}
           <a href="/" className="flex-shrink-0 z-50 relative">
