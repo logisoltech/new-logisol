@@ -39,8 +39,11 @@ const Page = () => {
 
           <div>
             <h2 className={`${headingFont.className} text-2xl md:text-3xl text-cyan-400 mb-3`}>1. Services</h2>
-            <p>
+            <p className="mb-3">
               Logisol provides software development, web development, mobile application development, digital marketing, SEO, graphic design, video editing, and related professional services. The specific scope, deliverables, timelines, and fees for each engagement will be set out in a proposal, statement of work, invoice, or written agreement (collectively, the &quot;Agreement&quot;). In the event of a conflict between these Terms and an Agreement, the Agreement will control for that engagement.
+            </p>
+            <p>
+              Logisol provides services remotely. Project meetings, approvals, and delivery of project materials take place through digital channels agreed with the Client. Any on-site services must be expressly included in the signed Agreement.
             </p>
           </div>
 
@@ -52,14 +55,17 @@ const Page = () => {
           </div>
 
           <div>
-            <h2 className={`${headingFont.className} text-2xl md:text-3xl text-cyan-400 mb-3`}>3. Payments and Non-Refundable Policy</h2>
+            <h2 className={`${headingFont.className} text-2xl md:text-3xl text-cyan-400 mb-3`}>3. Payments and Refund Policy</h2>
             <p className="mb-3">
               Unless expressly stated otherwise in a signed Agreement, the following payment terms apply:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <span className="text-white font-medium">Advance and general payments are non-refundable.</span>{' '}
-                Once an Agreement is in place, any advance payment, deposit, milestone payment, or other payment made to Logisol will not be refunded under any circumstances, including project cancellation, change of mind, delay attributable to the Client, or dissatisfaction after work has commenced in accordance with the agreed scope.
+                <span className="text-white font-medium">Project deposits and advance payments.</span>{' '}
+                The signed Agreement specifies the amount and purpose of any project deposit or advance payment. If the Client cancels for convenience, including a change of mind, any amount designated in the signed Agreement as a non-refundable project deposit will remain non-refundable unless the signed Agreement expressly provides for a refund or applicable law requires one. Refund eligibility for other advance payments is governed by the signed Agreement and applicable law.
+              </li>
+              <li>
+                Fees earned for services performed in accordance with the Agreement are non-refundable unless the signed Agreement expressly provides for a refund or applicable law requires one.
               </li>
               <li>
                 Invoices are due according to the schedule stated in the Agreement or invoice. Late payments may result in suspension of work until outstanding amounts are cleared.
@@ -83,10 +89,10 @@ const Page = () => {
                 Changes that fall within the original agreed scope and any included revision rounds will be handled as part of the project.
               </li>
               <li>
-                Changes that expand scope, add features, require rework beyond agreed revisions, or affect timelines may require a revised quote, additional fees, and/or an adjusted delivery schedule. Work on out-of-scope changes will begin after written confirmation of the revised terms.
+                Changes that expand scope, add features, require rework beyond agreed revisions, or affect timelines may require a revised quote, additional fees, and/or an adjusted delivery schedule. Work on out-of-scope changes will begin only after the Client approves the revised scope, fees, and schedule in writing.
               </li>
               <li>
-                Requesting changes does not entitle the Client to a refund of any amounts already paid.
+                A change request by itself does not create a right to a refund. Any refund is governed by Section 3, the signed Agreement, and applicable law.
               </li>
             </ul>
           </div>
@@ -166,7 +172,7 @@ const Page = () => {
                 Either party may terminate an engagement as provided in the Agreement, or if no termination clause exists, by written notice if the other party materially breaches and fails to cure within a reasonable period after notice.
               </li>
               <li>
-                Upon termination, the Client remains responsible for all fees for work performed and expenses incurred through the termination date. Advance and other payments already made remain non-refundable as stated in Section 3.
+                Upon termination, the Client remains responsible for all fees for work performed and expenses incurred through the termination date. Any refund of deposits or other payments is governed by Section 3, the signed Agreement, and applicable law.
               </li>
               <li>
                 Provisions that by their nature should survive (including payment, IP, confidentiality, limitation of liability, and indemnification) will survive termination.
