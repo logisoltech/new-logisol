@@ -3,7 +3,6 @@ import Script from "next/script";
 import "./globals.css";
 import { CountryProvider } from "./context/CountryContext";
 import Providers from "./Providers";
-import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
