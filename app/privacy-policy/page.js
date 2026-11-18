@@ -24,7 +24,7 @@ const Page = () => {
         >
           PRIVACY <span className="text-cyan-400">POLICY</span>
         </h1>
-        <p className="text-white/60 mt-4 text-sm md:text-base">Last updated: November 18, 2026</p>
+        {/* <p className="text-white/60 mt-4 text-sm md:text-base">Last updated: November 18, 2026</p> */}
       </div>
 
       <section className="relative pb-16 lg:pb-24">
