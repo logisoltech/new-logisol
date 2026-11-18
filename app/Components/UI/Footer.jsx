@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import emailjs from '@emailjs/browser';
 import { headingFont } from '../Font/headingFont';
 
@@ -53,27 +54,26 @@ const Footer = () => {
   };
 
   const quickLinks = [
-    'Home',
-    'About us',
-    'Services',
-    'Blog',
+    { label: 'Home', href: '/' },
+    { label: 'About us', href: '/about-us' },
+    { label: 'Services', href: '/services' },
+    { label: 'Blog', href: '/blogs' },
   ];
 
   const services = [
-    'Website Development',
-    'Mobile App Development',
-    'Social Media Marketing',
-    'Digital Marketing',
-    'SEO',
-    'Graphic Design',
-    'Video Editing',
+    { label: 'Website Development', href: '/custom-web-development-services' },
+    { label: 'Mobile App Development', href: '/mobile-application-development-services' },
+    { label: 'Social Media Marketing', href: '/social-media-marketing-services' },
+    { label: 'Digital Marketing', href: '/digital-marketing-services' },
+    { label: 'SEO', href: '/seo-services-and-strategy' },
+    { label: 'Graphic Design', href: '/graphics-designing-services' },
+    { label: 'Video Editing', href: '/professional-video-editing-services' },
   ];
 
   const supportLinks = [
-    'Help',
-    'Privacy Policy',
-    "Term's & Condition",
-    'Contact Us',
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms & Conditions', href: '/terms-and-conditions' },
+    { label: 'Contact Us', href: '/contact-us' },
   ];
 
   return (
@@ -158,14 +158,14 @@ const Footer = () => {
             <div>
               <h4 className="text-cyan-400 font-bold text-lg lg:text-xl mb-4">Quick Link</h4>
               <ul className="space-y-2">
-                {quickLinks.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
+                {quickLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
                       className="text-white/70 hover:text-cyan-400 transition-colors duration-300 text-sm lg:text-base"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -175,14 +175,14 @@ const Footer = () => {
             <div>
               <h4 className="text-cyan-400 font-bold text-lg lg:text-xl mb-4">Services</h4>
               <ul className="space-y-2">
-                {supportLinks.map((service, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
+                {services.map((service) => (
+                  <li key={service.href}>
+                    <Link
+                      href={service.href}
                       className="text-white/70 hover:text-cyan-400 transition-colors duration-300 text-sm lg:text-base"
                     >
-                      {service}
-                    </a>
+                      {service.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -192,14 +192,14 @@ const Footer = () => {
             <div>
               <h4 className="text-cyan-400 font-bold text-lg lg:text-xl mb-4">Support</h4>
               <ul className="space-y-2">
-                {services.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
+                {supportLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
                       className="text-white/70 hover:text-cyan-400 transition-colors duration-300 text-sm lg:text-base"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
